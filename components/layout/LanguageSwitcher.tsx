@@ -8,17 +8,24 @@ import {cn} from '@/lib/utils/cn';
 
 const SHORT_LABEL: Record<Locale, string> = {en: 'EN', ko: 'KO'};
 
-export function LanguageSwitcher({className}: {className?: string}) {
+export function LanguageSwitcher({className, onNavigate}: {className?: string; onNavigate?: () => void}) {
   const t = useTranslations('Nav');
   const current = useLocale();
   const pathname = usePathname();
   const router = useRouter();
 
   function keepQuery(event: MouseEvent<HTMLAnchorElement>, locale: Locale) {
-    const search = window.location.search;
-    if (!search) return; // the Link already points at the right path
+    onNavigate?.();
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const params = new URLSearchParams(window.location.search);
+    if (!params.size) return; // the Link already points at the right path
     event.preventDefault();
-    router.replace({pathname, query: Object.fromEntries(new URLSearchParams(search))}, {locale});
+    const query: Record<string, string | string[]> = {};
+    for (const key of new Set(params.keys())) {
+      const values = params.getAll(key);
+      query[key] = values.length > 1 ? values : values[0];
+    }
+    router.replace({pathname, query}, {locale});
   }
 
   return (

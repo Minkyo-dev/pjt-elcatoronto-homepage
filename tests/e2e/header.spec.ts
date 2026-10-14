@@ -53,6 +53,12 @@ test.describe('header — desktop', () => {
     await expect(page).toHaveURL(/\/ko\/ui-lab\?tab=second$/);
     await expect(page.locator('html')).toHaveAttribute('lang', 'ko');
   });
+
+  test('language switcher keeps repeated query keys', async ({page}) => {
+    await page.goto('/en/ui-lab?tab=second&tab=third');
+    await page.getByRole('group', {name: 'Language'}).getByRole('link', {name: /KO/}).click();
+    await expect(page).toHaveURL(/\/ko\/ui-lab\?tab=second&tab=third$/);
+  });
 });
 
 test.describe('header — mobile', () => {
@@ -81,6 +87,15 @@ test.describe('header — mobile', () => {
     await drawer.getByText('Get Involved').click();
     await drawer.getByRole('link', {name: 'Mentors', exact: true}).click();
     await expect(page).toHaveURL(/\/en\/get-involved\/mentors$/);
+    await expect(drawer).toBeHidden();
+  });
+
+  test('switching language closes the drawer', async ({page}) => {
+    await page.goto('/en/ui-lab');
+    await page.getByRole('button', {name: 'Open menu'}).click();
+    const drawer = page.getByRole('dialog', {name: 'Menu'});
+    await drawer.getByRole('group', {name: 'Language'}).getByRole('link', {name: /KO/}).click();
+    await expect(page).toHaveURL(/\/ko\/ui-lab$/);
     await expect(drawer).toBeHidden();
   });
 });

@@ -73,7 +73,7 @@ export function MobileNav({items, title, openLabel, donateLabel}: MobileNavProps
           </ul>
         </nav>
         <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6">
-          <LanguageSwitcher />
+          <LanguageSwitcher onNavigate={close} />
           <Button href="/get-involved/donate" variant="accent" onClick={close}>
             {donateLabel}
           </Button>
