@@ -1,0 +1,198 @@
+import {localizedPt} from '@/lib/utils/pt';
+import type {EventDoc} from '@/types/event';
+import {photo} from './images';
+
+const toronto = {en: 'Toronto', ko: '토론토'};
+
+export const events: EventDoc[] = [
+  // ── Upcoming (relative to October 2026) ──
+  {
+    _id: 'event.winter-networking-night-2026', _type: 'event', slug: 'winter-networking-night-2026',
+    kind: 'event', featured: true, isSample: true,
+    title: {en: 'Winter Networking Night', ko: '윈터 네트워킹 나이트'},
+    summary: {
+      en: 'An evening of conversation with mentors, alumni, and new members of the ELCA community.',
+      ko: '멘토, 선배, 새로운 회원들과 대화를 나누는 저녁 모임입니다.',
+    },
+    body: localizedPt({
+      en: 'Wrap up the year with the ELCA community. Winter Networking Night brings together current mentees, mentors, and alumni for structured and casual conversations.\n\n## What to expect\n\n- Short speed-networking rounds with mentors from different fields\n- Time to reconnect with your cohort\n- Light refreshments\n\nBring a few questions you would like to ask a professional in your field of interest.',
+      ko: 'ELCA 커뮤니티와 함께 한 해를 마무리해요. 윈터 네트워킹 나이트는 현재 멘티와 멘토, 수료생이 함께 모여 정해진 순서와 자유로운 대화를 나누는 자리입니다.\n\n## 이런 시간을 준비했어요\n\n- 다양한 분야의 멘토와 짧게 만나는 스피드 네트워킹\n- 동기들과 다시 만나는 시간\n- 간단한 다과\n\n관심 분야의 현직자에게 묻고 싶은 질문을 몇 가지 준비해 오세요.',
+    }),
+    startsAt: '2026-11-20T18:30:00-05:00',
+    endsAt: '2026-11-20T21:00:00-05:00',
+    location: {mode: 'in-person', label: {en: 'North York, Toronto (venue to be announced)', ko: '토론토 노스욕 (장소 추후 공지)'}},
+    audience: {en: 'Mentees, mentors, and alumni', ko: '멘티, 멘토, 수료생'},
+    capacity: 80,
+    agenda: [
+      {time: '18:30', item: {en: 'Arrival and check-in', ko: '도착 및 등록'}},
+      {time: '19:00', item: {en: 'Welcome remarks', ko: '환영사'}},
+      {time: '19:15', item: {en: 'Speed-networking rounds', ko: '스피드 네트워킹'}},
+      {time: '20:15', item: {en: 'Open conversation', ko: '자유 대화'}},
+    ],
+    coverImage: photo('networking'),
+  },
+  {
+    _id: 'event.resume-linkedin-workshop-2026', _type: 'event', slug: 'resume-linkedin-workshop-2026',
+    kind: 'workshop', isSample: true,
+    title: {en: 'Résumé & LinkedIn Workshop', ko: '이력서 & 링크드인 워크숍'},
+    summary: {
+      en: 'A hands-on session to polish your résumé and LinkedIn profile with HR mentors.',
+      ko: 'HR 멘토와 함께 이력서와 링크드인 프로필을 직접 다듬는 실습 세션입니다.',
+    },
+    body: localizedPt({
+      en: 'Bring your current résumé (or a draft) and leave with concrete edits.\n\n## Topics\n\n- Structuring a résumé for your first job or co-op\n- Writing achievement-focused bullet points\n- Making your LinkedIn profile work for you',
+      ko: '지금의 이력서(또는 초안)를 가져오시면 구체적으로 고쳐 드려요.\n\n## 다루는 내용\n\n- 첫 직장·코업을 위한 이력서 구성\n- 성과 중심으로 경험 쓰기\n- 나를 잘 보여 주는 링크드인 프로필 만들기',
+    }),
+    startsAt: '2026-12-05T10:00:00-05:00',
+    endsAt: '2026-12-05T12:00:00-05:00',
+    location: {mode: 'online', label: {en: 'Online (Zoom)', ko: '온라인 (Zoom)'}},
+    audience: {en: 'Mentees and students', ko: '멘티 및 학생'},
+    capacity: 40,
+    agenda: [
+      {time: '10:00', item: {en: 'Résumé basics', ko: '이력서 기본기'}},
+      {time: '10:45', item: {en: 'LinkedIn profile review', ko: '링크드인 프로필 리뷰'}},
+      {time: '11:30', item: {en: 'Q&A', ko: '질의응답'}},
+    ],
+    coverImage: photo('pairCoding'),
+  },
+  {
+    _id: 'event.cohort-14-kickoff-2027', _type: 'event', slug: 'cohort-14-kickoff-2027',
+    kind: 'event', isSample: true,
+    title: {en: 'Cohort 14 Kickoff', ko: '14기 킥오프'},
+    summary: {
+      en: 'Meet your mentor and cohort as Cohort 14 officially begins.',
+      ko: '14기의 공식 시작과 함께 멘토와 동기들을 처음 만나는 자리입니다.',
+    },
+    body: localizedPt({
+      en: 'The kickoff marks the start of a new cohort. You will meet your mentor, learn how the program works, and set your first goals together.\n\n## Before you come\n\n- Think about one goal you would like to reach in six months\n- Prepare a short self-introduction',
+      ko: '새로운 기수의 시작을 알리는 킥오프입니다. 멘토를 만나고, 프로그램 진행 방식을 듣고, 함께 첫 목표를 세웁니다.\n\n## 오기 전에 준비해 주세요\n\n- 6개월 안에 이루고 싶은 목표 한 가지\n- 짧은 자기소개',
+    }),
+    startsAt: '2027-01-30T13:00:00-05:00',
+    endsAt: '2027-01-30T16:00:00-05:00',
+    location: {mode: 'in-person', label: {en: 'Toronto (venue to be announced)', ko: '토론토 (장소 추후 공지)'}},
+    audience: {en: 'Cohort 14 mentees and mentors', ko: '14기 멘티와 멘토'},
+    capacity: 120,
+    agenda: [
+      {time: '13:00', item: {en: 'Welcome', ko: '환영 인사'}},
+      {time: '13:30', item: {en: 'Program overview', ko: '프로그램 안내'}},
+      {time: '14:15', item: {en: 'Meet your mentor', ko: '멘토와의 첫 만남'}},
+      {time: '15:30', item: {en: 'Group photo', ko: '단체 사진'}},
+    ],
+    coverImage: photo('seminarAudience'),
+  },
+  {
+    _id: 'event.startup-pitch-workshop-2027', _type: 'event', slug: 'startup-pitch-workshop-2027',
+    kind: 'workshop', isSample: true,
+    title: {en: 'Startup Pitch Workshop', ko: '스타트업 피치 워크숍'},
+    summary: {
+      en: 'Learn to turn an idea into a three-minute pitch, with feedback from founders.',
+      ko: '아이디어를 3분 피치로 만드는 법을 배우고 창업가 멘토의 피드백을 받습니다.',
+    },
+    body: localizedPt({
+      en: 'Have an idea you keep thinking about? This workshop walks you through framing the problem, your solution, and why now.\n\n## You will practise\n\n- Explaining your idea in one sentence\n- Structuring a three-minute pitch\n- Responding to questions with confidence',
+      ko: '자꾸 떠오르는 아이디어가 있나요? 문제 정의와 해결책, 지금 해야 하는 이유를 정리하는 과정을 함께합니다.\n\n## 이런 연습을 해요\n\n- 아이디어를 한 문장으로 설명하기\n- 3분 피치 구성하기\n- 질문에 자신 있게 답하기',
+    }),
+    startsAt: '2027-03-06T10:00:00-05:00',
+    endsAt: '2027-03-06T13:00:00-05:00',
+    location: {mode: 'hybrid', label: {en: 'Toronto and online', ko: '토론토 및 온라인'}},
+    audience: {en: 'Aspiring entrepreneurs', ko: '예비 창업가'},
+    capacity: 30,
+    agenda: [
+      {time: '10:00', item: {en: 'What makes a good pitch', ko: '좋은 피치의 조건'}},
+      {time: '11:00', item: {en: 'Team practice', ko: '팀별 연습'}},
+      {time: '12:15', item: {en: 'Pitches and feedback', ko: '발표 및 피드백'}},
+    ],
+    coverImage: photo('stickyNoteWorkshop'),
+  },
+  // ── Past ──
+  {
+    _id: 'event.cohort-12-graduation-2026', _type: 'event', slug: 'cohort-12-graduation-2026',
+    kind: 'event', isSample: true,
+    title: {en: 'Cohort 12 Graduation', ko: '12기 수료식'},
+    summary: {en: 'Celebrating the mentees and mentors of Cohort 12.', ko: '12기 멘티와 멘토의 수료를 함께 축하했습니다.'},
+    body: localizedPt({
+      en: 'Cohort 12 wrapped up with an evening of reflections, awards, and dinner.\n\nThank you to every mentor who gave their time this cohort.',
+      ko: '12기는 소감 나눔과 시상, 저녁 식사로 마무리되었습니다.\n\n이번 기수에 시간을 내어 준 모든 멘토께 감사드립니다.',
+    }),
+    startsAt: '2026-06-13T17:00:00-04:00',
+    endsAt: '2026-06-13T20:00:00-04:00',
+    location: {mode: 'in-person', label: toronto},
+    coverImage: photo('communityDinner'),
+    gallery: [photo('communityDinner', '1:1'), photo('warmFriends', '1:1'), photo('highFive', '1:1')],
+  },
+  {
+    _id: 'event.career-panel-tech-2026', _type: 'event', slug: 'career-panel-tech-2026',
+    kind: 'event', isSample: true,
+    title: {en: 'Careers in Tech Panel', ko: '테크 커리어 패널'},
+    summary: {en: 'Four mentors shared how they found their way into technology careers.', ko: '네 명의 멘토가 테크 업계로 들어온 각자의 길을 나눴습니다.'},
+    body: localizedPt({
+      en: 'Engineers, designers, and data scientists answered questions from mentees about first jobs, co-ops, and switching careers.',
+      ko: '엔지니어, 디자이너, 데이터 사이언티스트가 첫 직장, 코업, 커리어 전환에 대한 멘티들의 질문에 답했습니다.',
+    }),
+    startsAt: '2026-05-23T14:00:00-04:00',
+    endsAt: '2026-05-23T16:30:00-04:00',
+    location: {mode: 'in-person', label: toronto},
+    coverImage: photo('panelStage'),
+    gallery: [photo('panelStage', '1:1'), photo('notetaking', '1:1'), photo('stagePresentation', '1:1')],
+  },
+  {
+    _id: 'event.personal-branding-workshop-2026', _type: 'event', slug: 'personal-branding-workshop-2026',
+    kind: 'workshop', isSample: true,
+    title: {en: 'Personal Branding Workshop', ko: '퍼스널 브랜딩 워크숍'},
+    summary: {en: 'Mentees practised telling their story clearly and consistently.', ko: '멘티들이 자신의 이야기를 명확하고 일관되게 전하는 연습을 했습니다.'},
+    body: localizedPt({
+      en: 'A practical session on introducing yourself, writing a short bio, and presenting your experience online.',
+      ko: '자기소개와 짧은 프로필 작성, 온라인에서 경험을 보여 주는 방법을 다룬 실습 세션이었습니다.',
+    }),
+    startsAt: '2026-03-14T10:00:00-04:00',
+    endsAt: '2026-03-14T12:00:00-04:00',
+    location: {mode: 'online', label: {en: 'Online (Zoom)', ko: '온라인 (Zoom)'}},
+    coverImage: photo('laptopDiscussion'),
+    gallery: [photo('laptopDiscussion', '1:1'), photo('cafeMentoring', '1:1'), photo('friendsTablet', '1:1')],
+  },
+  {
+    _id: 'event.summer-community-picnic-2025', _type: 'event', slug: 'summer-community-picnic-2025',
+    kind: 'event', isSample: true,
+    title: {en: 'Summer Community Picnic', ko: '여름 커뮤니티 피크닉'},
+    summary: {en: 'Mentees, mentors, and families spent an afternoon together outdoors.', ko: '멘티와 멘토, 가족들이 함께 야외에서 오후를 보냈습니다.'},
+    body: localizedPt({
+      en: 'Games, food, and plenty of conversation — thank you to everyone who came out.',
+      ko: '게임과 음식, 그리고 많은 대화가 있었던 시간이었습니다. 함께해 주신 모든 분께 감사드립니다.',
+    }),
+    startsAt: '2025-08-16T12:00:00-04:00',
+    endsAt: '2025-08-16T16:00:00-04:00',
+    location: {mode: 'in-person', label: toronto},
+    coverImage: photo('communityArmInArm'),
+    gallery: [photo('communityArmInArm', '1:1'), photo('warmFriends', '1:1'), photo('friendsTablet', '1:1')],
+  },
+  {
+    _id: 'event.financial-literacy-workshop-2025', _type: 'event', slug: 'financial-literacy-workshop-2025',
+    kind: 'workshop', isSample: true,
+    title: {en: 'Financial Literacy Workshop', ko: '금융 기초 워크숍'},
+    summary: {en: 'Budgeting, saving, and first steps in investing for students.', ko: '학생을 위한 예산 관리, 저축, 투자 첫걸음을 다뤘습니다.'},
+    body: localizedPt({
+      en: 'Mentors in accounting and finance covered budgeting basics, student credit, and how compound growth works.',
+      ko: '회계·금융 분야 멘토들이 예산 관리 기초, 학생 신용, 복리의 원리를 설명했습니다.',
+    }),
+    startsAt: '2025-04-12T10:00:00-04:00',
+    endsAt: '2025-04-12T12:00:00-04:00',
+    location: {mode: 'in-person', label: toronto},
+    coverImage: photo('financeChart'),
+    gallery: [photo('financeChart', '1:1'), photo('classroomTalk', '1:1'), photo('notetaking', '1:1')],
+  },
+  {
+    _id: 'event.annual-mentorship-conference-2024', _type: 'event', slug: 'annual-mentorship-conference-2024',
+    kind: 'event', isSample: true,
+    title: {en: 'Annual Mentorship Conference 2024', ko: '2024 연례 멘토십 컨퍼런스'},
+    summary: {en: 'Our yearly gathering of mentees, mentors, alumni, and partners.', ko: '멘티와 멘토, 수료생, 파트너가 모이는 연례 행사였습니다.'},
+    body: localizedPt({
+      en: 'Keynotes, breakout sessions, and recognition of outstanding mentees and mentors.',
+      ko: '기조 강연과 분과 세션, 우수 멘티·멘토 시상이 이어졌습니다.',
+    }),
+    startsAt: '2024-11-09T13:00:00-05:00',
+    endsAt: '2024-11-09T17:00:00-05:00',
+    location: {mode: 'in-person', label: toronto},
+    coverImage: photo('lectureHall'),
+    gallery: [photo('lectureHall', '1:1'), photo('seminarAudience', '1:1'), photo('microphone', '1:1')],
+  },
+];
