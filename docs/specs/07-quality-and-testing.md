@@ -9,6 +9,9 @@
 | 단위 | Vitest | `npm run test` | 순수 로직 (§2) |
 | E2E·접근성 | Playwright + `@axe-core/playwright` | `npm run test:e2e` | 라우트·인터랙션 (§3) |
 | 빌드 | Next.js | `npm run build` | 모든 라우트 × en/ko 정적 생성 성공 |
+| 구조 가드 | Vitest | `npm run test` | `components/`가 Repository·mock을 import하지 않음, 컴포넌트·라우트에 hex 색상과 px 임의값 없음 (완료 조건 6, 8) |
+
+E2E는 production 빌드(`next build && next start`)를 대상으로 실행하며, 프리미티브는 개발 전용 UI Lab 페이지(D28)에서 검증한다.
 
 로직 단위(§2)는 **테스트 우선(TDD)** 으로 작성한다. UI 인터랙션은 E2E로 검증한다.
 

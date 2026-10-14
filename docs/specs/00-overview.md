@@ -79,6 +79,17 @@ Sanity 연동, `/studio`, Vercel 배포, 인증, 실제 DB/API, 결제, 이메�
 | D18 | 기존 사이트(elcatoronto.com)에서 확인한 사실(2019 설립, 12개 cohort, 약 200명 멘티, 1·7월 모집, 연락처)은 사용하되 **`needsReview`(검수 대상)** 표시. 그 외 인물·통계·후원 수치는 **`isSample`(SAMPLE)** 표시 | 원본 "검증되지 않은 사실을 만들지 않는다" |
 | D19 | 한국어 제목 letter-spacing은 -0.01em으로 완화 | 한글에 -0.04em 적용 시 자간이 뭉침 |
 | D20 | 문서는 `docs/specs/`에 주제별 번호 파일로 분할 | 디자이너·팀원의 탐색 편의 |
+| D21 | 런타임 **Node 24 LTS**, 이 레포에만 `.nvmrc`로 적용 (nvm default는 20 유지) | Node 20 지원 종료, Vitest 5는 Node 22+ 필요. 다른 레포(Next.js 14) 영향 없음 |
+| D22 | Next.js 16.4 기본값인 `cacheComponents`는 켜고, **`partialPrefetching`은 끈다** | 켜 두면 알 수 없는 `[slug]`가 404 대신 200을 반환함을 검증으로 확인 |
+| D23 | 현재 시각에 의존하는 로직(이벤트 예정/지난 판정, 저작권 연도)은 `'use cache'` Repository 함수 안에서만 계산 | cacheComponents는 prerender 중 `new Date()`를 빌드 에러로 처리 |
+| D24 | `?category=`, `?topic=`은 `Suspense`+`useSearchParams` 대신 **`useSyncExternalStore`로 hydration 후 읽음** | 페이지 전체를 정적 HTML로 유지(서버 스냅샷은 기본값). 허용 목록 외 값은 무시 |
+| D25 | 사진 위 오버레이를 `rgb(23 35 43 / 0.72)`로 강화, 사진 위 텍스트는 `on-primary`(흰색)만 사용 | 흰 사진 최악 조건에서 0.6은 4.30:1로 AA 미달, 0.72는 6.36:1 |
+| D26 | 파생 토큰 `primary-deep`, `danger-on-dark` 추가, Button에 `inverse` variant 추가 | 다크 Footer와 사진 위 CTA의 대비 확보 |
+| D27 | lucide-react 1.x에 브랜드 아이콘이 없어 SNS는 레터마크(`f`, `in`)로 대체 | 공식 마크는 디자이너 결과물로 교체 |
+| D28 | 개발 전용 **UI Lab**(`/{locale}/ui-lab`): 빌드 시 `NEXT_PUBLIC_ENABLE_UI_LAB=1`일 때만 존재, noindex | 프리미티브 E2E 테스트와 디자이너용 컴포넌트 쇼케이스 겸용 |
+| D29 | 현지화 해석은 필드별 수동 매핑 대신 타입 안전한 **깊은 resolver**(`resolveLocalized` + `Resolved<T>`) | 매핑 코드 수백 줄 제거, Doc ↔ View 타입 자동 일치 |
+| D30 | `mentor.company`도 `Localized` | 학생 멘토의 소속("경영학 학부 재학")은 번역이 필요 |
+| D31 | 데모 폼은 데모 안내 직후 재제출(더블클릭)을 무시해 초기화된 폼에 `required` 에러가 번쩍이지 않게 함 | 사용자 혼란 방지 |
 
 ## 5. 검수·확인 필요 항목 (Open Items)
 

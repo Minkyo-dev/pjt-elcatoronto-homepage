@@ -114,7 +114,7 @@
 
 ### 검색 동작
 - 대상: 현재 로케일 이름 + 다른 로케일 이름(한글·영문 이름 모두 검색되도록). 대소문자·앞뒤 공백 무시.
-- 입력 즉시 필터링(디바운스 150ms). 검색어가 바뀌면 "Load more" 페이지를 초기화.
+- 입력 즉시 필터링(`useDeferredValue`로 입력 지연 없이 처리). 검색어가 바뀌면 "Load more" 페이지를 초기화.
 - industry / role / location 필터는 **UI 없음**. 데이터 필드만 예약.
 
 ---
@@ -197,7 +197,7 @@ Breadcrumb → 카테고리 배지, 제목(`h1`), 날짜, 작성자 → 대표 �
 | 4 | **Location** | 주소 텍스트 + 지도 placeholder(정적 블록, 외부 embed 없음) | `siteSettings.location` |
 | 5 | **FAQ / Support** | Accordion | `faq[]` (group: `contact`) |
 
-- `?topic=` 값(`general`, `mentorship`, `mentor`, `donation`, `event`, `partnership`)으로 주제를 미리 선택. 알 수 없는 값은 무시. 클라이언트에서 `useSearchParams`를 `Suspense` 안에서 읽어 정적 렌더링 유지.
+- `?topic=` 값(`general`, `mentorship`, `mentor`, `donation`, `event`, `partnership`)으로 주제를 미리 선택. 알 수 없는 값은 무시. hydration 후 `useSyncExternalStore`로 읽어 정적 렌더링 유지 (D24).
 
 ---
 

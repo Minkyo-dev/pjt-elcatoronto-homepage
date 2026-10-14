@@ -32,10 +32,12 @@
 | `on-primary-muted` | #B9C1CA | primary 배경 위 보조 텍스트 |
 | `border` | #E3E8E5 | 카드·구분선(장식용) |
 | `border-strong` | #8A959C | 입력 필드 테두리, 의미 있는 UI 경계 |
-| `overlay` | `rgb(23 35 43 / 0.6)` | 사진 Hero 위 어두운 오버레이 (구현 시 텍스트 대비 재검증) |
+| `overlay` | `rgb(23 35 43 / 0.72)` | 사진 Hero 위 어두운 오버레이. 흰 사진 최악 조건에서도 흰 텍스트 6.36:1 (D25). 사진 위 텍스트는 `on-primary`만 사용 |
+| `primary-deep` | #10263B | Footer 본문 배경 (pre-footer CTA `primary`와 구분) |
+| `danger-on-dark` | #FDA29B | 다크 배경 위 폼 에러 (7.94:1 on `primary-deep`) |
 | `danger` | #B42318 | 폼 에러 텍스트·테두리 |
 
-`primary-hover`, `accent-strong`, `on-primary-muted`, `border-strong`, `overlay`, `danger`는 원본 팔레트에 없는 **파생 토큰**이다 (Decision D12).
+`primary-hover`, `primary-deep`, `accent-strong`, `on-primary-muted`, `border-strong`, `overlay`, `danger`, `danger-on-dark`는 원본 팔레트에 없는 **파생 토큰**이다 (Decision D12, D26).
 
 ### 대비 검증 결과 (WCAG 2.x 상대 휘도 공식으로 계산)
 

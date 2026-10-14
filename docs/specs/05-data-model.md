@@ -45,8 +45,8 @@ export type DocBase = Flags & { _id: string; _type: string }
 ```
 
 ### 현지화 해석 (`lib/i18n/localize.ts`)
-- `localize<T>(value: Localized<T>, locale: Locale): T` — `value[locale] ?? value.en`.
-- `localizeDeep()` 대신 Repository에서 **필드별로 명시적으로** 해석한다(타입 안전성 확보).
+- `localize<T>(value: Localized<T>, locale: Locale): T` — `value[locale]`가 없거나 공백이면 `value.en`.
+- `resolveLocalized<T>(doc, locale): Resolved<T>` — 문서 전체를 깊게 해석한다. `Resolved<T>` 타입이 모든 `Localized<X>`를 `X`로 바꾸므로 ViewModel 타입이 Doc 타입에서 자동으로 파생된다 (D29).
 - 단위 테스트 대상: fallback 동작, 빈 문자열 처리(빈 문자열은 값이 있는 것으로 간주하지 않고 fallback).
 
 ## 3. Doc 타입과 ViewModel
@@ -60,7 +60,7 @@ export type MentorDoc = DocBase & {
   slug: string
   name: Localized                 // { en: 'Jiwon Kim', ko: '김지원' }
   jobTitle: Localized
-  company: string
+  company: Localized               // D30: 학생 멘토 소속도 번역
   location: Localized
   cohort?: number                 // 출신 cohort (ELCA 멘티 출신이 아니면 없음)
   cohortRole?: Localized          // 'Cohort 3 Mentee → Mentor'
@@ -98,6 +98,7 @@ export type Mentor = Flags & {
 | 타입 | 주요 필드 |
 |---|---|
 | `siteSettings` | `orgName: L`, `description: L`, `email`, `location: { label: L, address?: L }`, `social: { facebook?, linkedin?, instagram? }`, `preFooterCta: { title: L, body: L, ctas: Cta[] }`, `newsletter: { title: L, body: L }` |
+| (공통) | 모든 페이지 singleton은 `seo: {title: L, description: L}`을 가진다 |
 | `homePage` | `heroSlides: HeroSlide[]`, `purpose: { title: L, body: L }`, `mentorshipPreview: { title: L, body: L, items: { title: L, body: L }[], cta: Cta }`, `getInvolved: { title: L, cards: { title: L, body: L, cta: Cta, tone: 'primary' \| 'secondary' \| 'accent' }[] }`, 섹션별 `title/intro: L` |
 | `aboutPage` | `hero`, `purpose`, `mission`, `vision`, `reportsTeaser`, `cta`, 섹션별 `title/intro` |
 | `reportsPage` | `hero`, 탭 라벨 `L` |
@@ -105,6 +106,8 @@ export type Mentor = Flags & {
 | `mentorsPage` | `hero`, `cta`, 섹션별 `title/intro` |
 | `donatePage` | `hero`, `why: { title: L, body: L, points: Card[] }`, `fundUsage: { label: L, percent: number }[]` |
 | `eventsPage` | `hero`, `forms: { hostIntro: L, requestIntro: L }`, 섹션별 `title/intro` |
+| `reportsPage` | `hero` |
+| `mentorsPage` | `hero`, `featured`, `directory`(섹션 문구), `cta` |
 | `contactPage` | `hero`, 섹션별 `title/intro` |
 
 보조 객체:

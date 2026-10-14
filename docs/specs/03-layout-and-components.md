@@ -51,11 +51,11 @@
 │ © {현재 연도} ELCA. All rights reserved.                   Privacy Policy      │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
-- Footer 전체 배경 `primary`, 보조 텍스트는 `on-primary-muted`.
+- Pre-footer CTA 배경은 `primary`, 4열 영역과 bottom bar는 `primary-deep`(D26). 보조 텍스트는 `on-primary-muted`.
 - 4열 → tablet 2열 → mobile 1열.
 - 설명 문구·연락처·SNS URL·CTA 문구는 `siteSettings`(mock)에서 온다. 연락처 이메일은 `needsReview`.
 - 각 열은 `<nav aria-label>` 또는 `<section>` + 제목(`h2`, 시각적으로 작게).
-- SNS 링크는 아이콘 + `aria-label`("ELCA on Facebook"), `target="_blank" rel="noopener noreferrer"`.
+- SNS 링크는 레터마크(`SocialMark`, D27) + `aria-label`("ELCA on Facebook (opens in a new tab)"), `target="_blank" rel="noopener noreferrer"`.
 - **Privacy Policy:** 페이지가 범위 밖이므로 Contact로 연결하고 "(준비 중 / Coming soon)" 텍스트를 함께 표시 (Decision D15).
 
 ### NewsletterForm (데모)
@@ -81,7 +81,7 @@
 
 | 컴포넌트 | 계약 |
 |---|---|
-| `Button` | variant: `primary` / `secondary` / `accent` / `ghost` / `on-dark`; size: `md` / `lg`; `href`가 있으면 로케일 인지 `Link`로 렌더링, 외부 URL이면 `<a>`. 아이콘 슬롯 |
+| `Button` | variant: `primary` / `secondary` / `accent` / `ghost` / `inverse`(다크 배경 위 흰 버튼) / `on-dark`(다크 배경 위 외곽선); size: `md` / `lg`; `href`가 있으면 로케일 인지 `Link`로 렌더링, 외부 URL이면 `<a>`. 아이콘 슬롯 |
 | `Badge` | variant: `neutral` / `category` / `sample` / `review` / `demo` |
 | `Tabs` | WAI-ARIA Tabs 패턴(`role=tablist/tab/tabpanel`, ←/→/Home/End, roving tabindex). controlled/uncontrolled 모두 지원(URL 동기화용) |
 | `Accordion` | `<details>/<summary>` 기반. 다중 열림 허용. 제목 레벨은 prop으로 지정 |

@@ -4,7 +4,7 @@
 
 | 영역 | 선택 | 비고 |
 |---|---|---|
-| Framework | Next.js 16 App Router | 구현 착수 시 최신 안정 버전 재확인 |
+| Framework | Next.js 16.4 App Router | `cacheComponents: true`, `partialPrefetching` 끔 (D22) |
 | Language | TypeScript (`strict: true`) | |
 | Styling | Tailwind CSS v4 | 토큰은 `app/globals.css`의 `@theme`에 정의 |
 | i18n | next-intl | 로케일 라우팅, 메시지, 날짜·숫자 포맷 |
@@ -12,7 +12,7 @@
 | Validation | zod | 데모 폼 검증, Phase 3 재사용 |
 | Icons | lucide-react | |
 | Test | Vitest, Playwright, `@axe-core/playwright` | 07 문서 참조 |
-| Runtime | Node 20, npm | 현재 개발 환경 기준 |
+| Runtime | Node 24 LTS, npm 11 | `.nvmrc`로 이 레포에만 적용 (D21) |
 
 외부 UI 컴포넌트 라이브러리는 사용하지 않는다 (Decision D16).
 
@@ -103,7 +103,8 @@ app/(page.tsx) → lib/content → data/mock (Phase 2: Sanity client)
 ## 5. 렌더링 전략
 
 - Server Component 기본. 상태가 필요한 컴포넌트(메뉴, Drawer, Tabs, Accordion, Carousel, Dialog, 검색, 폼, Floating UI)만 `"use client"`.
-- 모든 공개 페이지는 빌드 시 정적 생성(SSG). 페이지에서 `searchParams`를 읽지 않는다 — 쿼리 의존 UI(`?category=`, `?topic=`)는 클라이언트에서 `useSearchParams`를 `Suspense` 경계 안에서 읽는다.
+- 모든 공개 페이지는 빌드 시 정적 생성(SSG). 페이지에서 `searchParams`를 읽지 않는다 — 쿼리 의존 UI(`?category=`, `?topic=`)는 클라이언트에서 `useSyncExternalStore`로 hydration 후 읽고, 쓰기는 `history.replaceState`로 한다 (D24).
+- 현재 시각이 필요한 계산은 `'use cache'` Repository 함수 안에서만 한다 (D23).
 - 이미지는 `next/image`. Phase 1의 `remotePatterns`는 `images.unsplash.com`만 허용(Phase 2에서 `cdn.sanity.io` 추가).
 - 폰트는 `next/font/google`(self-host)로 레이아웃 시프트 방지.
 
