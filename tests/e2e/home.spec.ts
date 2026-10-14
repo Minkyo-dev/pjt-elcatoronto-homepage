@@ -14,6 +14,10 @@ test.describe('home — hero carousel', () => {
     await page.goto('/en');
     const carousel = page.locator('[aria-roledescription="carousel"]');
     await carousel.getByRole('button', {name: 'Pause slideshow'}).click();
+    await carousel.getByRole('button', {name: 'Previous slide'}).click();
+    await expect(carousel.getByRole('link', {name: 'View event details'})).toBeVisible(); // wrapped to last slide
+    await carousel.getByRole('button', {name: 'Next slide'}).click();
+    await expect(carousel.getByRole('heading', {name: 'Grow your path with mentors who have walked it'})).toBeVisible();
     await carousel.getByRole('button', {name: 'Next slide'}).click();
     await expect(carousel.getByRole('heading', {name: 'Share what you know. Shape who comes next.'})).toBeVisible();
     await expect(carousel.getByRole('link', {name: 'Become a Mentor'})).toHaveAttribute('href', '/en/get-involved/mentors#become-a-mentor');
@@ -30,25 +34,46 @@ test.describe('home — hero carousel', () => {
     await page.clock.install();
     await page.goto('/en');
     const carousel = page.locator('[aria-roledescription="carousel"]');
+    const slide2 = carousel.getByRole('heading', {name: 'Share what you know. Shape who comes next.'});
     await expect(carousel).toHaveAttribute('data-autoplay', 'true'); // hydrated, timer armed
+    await expect(carousel.locator('[aria-live]')).toHaveAttribute('aria-live', 'off');
     await page.clock.fastForward(7500);
-    await expect(carousel.getByRole('heading', {name: 'Share what you know. Shape who comes next.'})).toBeVisible();
+    await expect(slide2).toBeVisible();
     await carousel.getByRole('button', {name: 'Pause slideshow'}).click();
     await expect(carousel.getByRole('button', {name: 'Play slideshow'})).toBeVisible();
+    await expect(carousel.locator('[aria-live]')).toHaveAttribute('aria-live', 'polite');
+    // move focus and pointer out so only the explicit pause can be holding autoplay off
+    await page.locator('body').click({position: {x: 5, y: 5}});
     await page.mouse.move(0, 0);
+    await expect(carousel).toHaveAttribute('data-autoplay', 'false');
     await page.clock.fastForward(15000);
-    await expect(carousel.getByRole('heading', {name: 'Share what you know. Shape who comes next.'})).toBeVisible();
+    await expect(slide2).toBeVisible();
+  });
+
+  test('pauses on hover and resumes when the pointer leaves', async ({page}) => {
+    await page.clock.install();
+    await page.goto('/en');
+    const carousel = page.locator('[aria-roledescription="carousel"]');
+    await expect(carousel).toHaveAttribute('data-autoplay', 'true');
+    await carousel.hover();
+    await expect(carousel).toHaveAttribute('data-autoplay', 'false');
+    await page.mouse.move(0, 0);
+    await expect(carousel).toHaveAttribute('data-autoplay', 'true');
   });
 
   test('never autoplays with reduced motion', async ({page}) => {
     await page.emulateMedia({reducedMotion: 'reduce'});
     await page.clock.install();
     await page.goto('/en');
-    await expect(page.locator('[aria-roledescription="carousel"]')).toHaveAttribute('data-autoplay', 'false');
+    const carousel = page.locator('[aria-roledescription="carousel"]');
+    const slide2 = carousel.getByRole('heading', {name: 'Share what you know. Shape who comes next.'});
+    await carousel.getByRole('button', {name: 'Next slide'}).click(); // only works once hydrated
+    await expect(slide2).toBeVisible();
+    await page.locator('body').click({position: {x: 5, y: 5}});
+    await page.mouse.move(0, 0);
+    await expect(carousel).toHaveAttribute('data-autoplay', 'false');
     await page.clock.fastForward(15000);
-    await expect(
-      page.locator('[aria-roledescription="carousel"]').getByRole('heading', {name: 'Grow your path with mentors who have walked it'}),
-    ).toBeVisible();
+    await expect(slide2).toBeVisible();
   });
 });
 
