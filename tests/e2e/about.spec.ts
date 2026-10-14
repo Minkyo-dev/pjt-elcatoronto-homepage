@@ -46,3 +46,24 @@ test.describe('about page', () => {
     await expect(page.getByRole('heading', {level: 1, name: '멘토십으로 이어진 커뮤니티'})).toBeVisible();
   });
 });
+
+test.describe('reports page', () => {
+  test('switches between financial statements and annual reports', async ({page}) => {
+    await page.goto('/en/about/reports');
+    await expect(page.getByRole('heading', {level: 1, name: 'Reports & transparency'})).toBeVisible();
+    const panel = page.getByRole('tabpanel');
+    await expect(panel.getByRole('heading', {level: 3})).toHaveText(['2025 Financial Statements', '2024 Financial Statements']);
+
+    await page.getByRole('tab', {name: 'Financial Statements'}).focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.getByRole('tab', {name: 'Annual Reports'})).toHaveAttribute('aria-selected', 'true');
+    await expect(panel.getByRole('heading', {level: 3})).toHaveText(['2025 Annual Report', '2024 Annual Report']);
+  });
+
+  test('marks sample files as unavailable', async ({page}) => {
+    await page.goto('/en/about/reports');
+    const buttons = page.getByRole('tabpanel').getByRole('button', {name: 'Sample — file not available'});
+    await expect(buttons).toHaveCount(2);
+    await expect(buttons.first()).toBeDisabled();
+  });
+});
