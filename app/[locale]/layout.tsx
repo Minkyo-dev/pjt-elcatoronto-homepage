@@ -1,5 +1,5 @@
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
-import type {Metadata} from 'next';
+import type {Metadata, Viewport} from 'next';
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {FloatingActions} from '@/components/layout/FloatingActions';
@@ -11,6 +11,8 @@ import {fontVariables} from '@/lib/fonts';
 import {routing} from '@/lib/i18n/routing';
 import {siteUrl} from '@/lib/utils/site';
 import '../globals.css';
+
+export const viewport: Viewport = {viewportFit: 'cover'};
 
 export async function generateMetadata({params}: LayoutProps<'/[locale]'>): Promise<Metadata> {
   const {locale} = await params;

@@ -14,7 +14,7 @@ test('body uses the background token and the English font stack', async ({page})
 test('Korean pages put Noto Sans KR first and relax heading tracking', async ({page}) => {
   await page.goto('/ko');
   const result = await page.evaluate(() => {
-    const h1 = document.querySelector('h1')!;
+    const h1 = document.querySelector('[aria-roledescription="carousel"] h2')!;
     return {
       font: getComputedStyle(document.body).fontFamily,
       tracking: getComputedStyle(h1).letterSpacing,
@@ -28,7 +28,7 @@ test('Korean pages put Noto Sans KR first and relax heading tracking', async ({p
 
 test('display heading scales between mobile and desktop', async ({page}, testInfo) => {
   await page.goto('/en');
-  const size = await page.locator('h1').evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+  const size = await page.locator('[aria-roledescription="carousel"] h2').first().evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
   if (testInfo.project.name === 'mobile') {
     expect(size).toBeGreaterThanOrEqual(36);
     expect(size).toBeLessThanOrEqual(40);
