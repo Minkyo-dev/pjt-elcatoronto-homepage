@@ -2,8 +2,10 @@ import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import type {Metadata} from 'next';
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
+import {Footer} from '@/components/layout/Footer';
 import {Header} from '@/components/layout/Header';
 import {OverlayProvider} from '@/components/layout/OverlayProvider';
+import {getSiteSettings} from '@/lib/content/site';
 import {fontVariables} from '@/lib/fonts';
 import {routing} from '@/lib/i18n/routing';
 import {siteUrl} from '@/lib/utils/site';
@@ -27,6 +29,7 @@ export function generateStaticParams() {
 export default async function LocaleLayout({children, params}: LayoutProps<'/[locale]'>) {
   const {locale} = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
+  const settings = await getSiteSettings(locale);
 
   return (
     <html lang={locale} className={fontVariables}>
@@ -37,6 +40,7 @@ export default async function LocaleLayout({children, params}: LayoutProps<'/[lo
             <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
               {children}
             </main>
+            <Footer settings={settings} />
           </OverlayProvider>
         </NextIntlClientProvider>
       </body>
