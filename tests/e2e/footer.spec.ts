@@ -30,6 +30,7 @@ test('newsletter validates, then shows a demo notice without subscribing', async
   await expect(footer.getByText('Enter a valid email address.')).toBeVisible();
   await email.fill('reader@example.com');
   await expect(footer.getByText('Enter a valid email address.')).toBeHidden();
+  await expect(footer.getByText('Please fix the highlighted fields.')).toBeHidden();
 
   await submit.click();
   await expect(footer.getByText('This is a demo. No subscription was created.')).toBeVisible();

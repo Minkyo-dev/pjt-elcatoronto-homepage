@@ -21,13 +21,12 @@ export function useDemoForm<V extends FieldValues>(schema: z.ZodType, initialVal
   function revalidate(field: Field, next: V) {
     const result = schema.safeParse(next);
     const fieldErrors = result.success ? {} : toFieldErrors(result.error);
-    setErrors((previous) => {
-      const updated = {...previous};
-      const error = fieldErrors[field];
-      if (error) updated[field] = error;
-      else delete updated[field];
-      return updated;
-    });
+    const updated = {...errors};
+    const error = fieldErrors[field];
+    if (error) updated[field] = error;
+    else delete updated[field];
+    setErrors(updated);
+    if (Object.keys(updated).length === 0) setStatus('idle');
   }
 
   function setValue<K extends Field>(field: K, value: V[K]) {

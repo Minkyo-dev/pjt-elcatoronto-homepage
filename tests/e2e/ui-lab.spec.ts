@@ -14,8 +14,8 @@ test.describe('UI Lab — static primitives', () => {
 
   test('shows localized flag badges and initials', async ({page}) => {
     await page.goto('/ko/ui-lab');
-    await expect(page.getByText('샘플', {exact: true})).toBeVisible();
-    await expect(page.getByText('검수 필요', {exact: true})).toBeVisible();
+    await expect(page.locator('#badges').getByText('샘플', {exact: true})).toBeVisible();
+    await expect(page.locator('#badges').getByText('검수 필요', {exact: true})).toBeVisible();
     await expect(page.getByText('JK', {exact: true})).toBeVisible();
     await expect(page.getByText('김', {exact: true})).toBeVisible();
   });
