@@ -43,7 +43,7 @@ export function Scroller({label, items, itemClassName = 'w-[85%] sm:w-[45%] lg:w
         ref={listRef}
         tabIndex={0}
         aria-label={t('scrollerLabel', {label})}
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4"
+        className="relative flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4"
       >
         {items.map((item) => (
           <li key={item.key} className={cn('shrink-0 snap-start', itemClassName)}>
