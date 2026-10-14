@@ -103,7 +103,7 @@ describe('content', () => {
 
 describe('pages and settings', () => {
   it('swaps the event slide to the event cover and detail link', async () => {
-    const home = await getHomePage('ko');
+    const home = await getHomePage('ko', NOW);
     const slide = home.heroSlides.find((s) => s.kind === 'event')!;
     expect(slide.media.image.url).toContain('1515169067868-5387ec356754');
     expect(slide.media.image.alt).toBe('저녁 네트워킹 행사에서 음료를 들고 대화하는 사람들');
@@ -114,6 +114,21 @@ describe('pages and settings', () => {
     const settings = await getSiteSettings('ko');
     expect(settings.currentYear).toBeGreaterThanOrEqual(2026);
     expect(settings.description).toBe('멘토십과 리더십, 그리고 커뮤니티로 사람을 잇습니다.');
+  });
+});
+
+describe('home hero event slide', () => {
+  it('falls back to the next upcoming event once the authored one has passed', async () => {
+    const home = await getHomePage('en', '2026-12-01T12:00:00-05:00');
+    const slide = home.heroSlides.find((s) => s.kind === 'event')!;
+    expect(slide.eventSlug).toBe('resume-linkedin-workshop-2026');
+    expect(slide.title).toBe('Résumé & LinkedIn Workshop');
+    expect(slide.ctas[0].href).toBe('/events-news/resume-linkedin-workshop-2026');
+  });
+
+  it('drops the event slide when nothing is upcoming', async () => {
+    const home = await getHomePage('en', '2030-01-01T12:00:00-05:00');
+    expect(home.heroSlides.some((s) => s.kind === 'event')).toBe(false);
   });
 });
 

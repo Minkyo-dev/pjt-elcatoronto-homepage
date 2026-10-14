@@ -1,5 +1,4 @@
 import 'server-only';
-import {events} from '@/data/mock/events';
 import {aboutPage} from '@/data/mock/pages/about';
 import {contactPage} from '@/data/mock/pages/contact';
 import {donatePage} from '@/data/mock/pages/donate';
@@ -9,6 +8,7 @@ import {mentorshipPage} from '@/data/mock/pages/mentorship';
 import {mentorsPage} from '@/data/mock/pages/mentors';
 import {reportsPage} from '@/data/mock/pages/reports';
 import {resolveLocalized} from '@/lib/i18n/localize';
+import {getEvents} from './events';
 import type {Locale} from '@/types/common';
 import type {
   AboutPage,
@@ -21,19 +21,26 @@ import type {
   ReportsPage,
 } from '@/types/pages';
 
-export async function getHomePage(locale: Locale): Promise<HomePage> {
+export async function getHomePage(locale: Locale, now?: string): Promise<HomePage> {
   'use cache';
   const page = resolveLocalized(homePage, locale);
-  const heroSlides = page.heroSlides.map((slide) => {
-    if (slide.kind !== 'event' || !slide.eventSlug) return slide;
-    const doc = events.find((event) => event.slug === slide.eventSlug);
-    if (!doc) return slide;
-    const event = resolveLocalized(doc, locale);
-    return {
-      ...slide,
-      media: {...slide.media, image: event.coverImage},
-      ctas: slide.ctas.map((cta, index) => (index === 0 ? {...cta, href: `/events-news/${event.slug}`} : cta)),
-    };
+  const upcoming = await getEvents({locale, status: 'upcoming', now});
+  const heroSlides = page.heroSlides.flatMap((slide) => {
+    if (slide.kind !== 'event') return [slide];
+    const event =
+      upcoming.find((item) => item.slug === slide.eventSlug) ?? upcoming.find((item) => item.featured) ?? upcoming[0];
+    if (!event) return [];
+    const authored = event.slug === slide.eventSlug;
+    return [
+      {
+        ...slide,
+        eventSlug: event.slug,
+        title: authored ? slide.title : event.title,
+        body: authored ? slide.body : event.summary,
+        media: {...slide.media, image: event.coverImage},
+        ctas: slide.ctas.map((cta, index) => (index === 0 ? {...cta, href: `/events-news/${event.slug}`} : cta)),
+      },
+    ];
   });
   return {...page, heroSlides};
 }
