@@ -1,10 +1,11 @@
 import {getTranslations} from 'next-intl/server';
+import {Section} from '@/components/layout/Section';
 
 export default async function HomePage() {
   const t = await getTranslations('Metadata');
   return (
-    <main id="main">
-      <h1>{t('siteName')}</h1>
-    </main>
+    <Section>
+      <h1 className="max-w-heading font-heading text-display font-extrabold text-text">{t('siteName')}</h1>
+    </Section>
   );
 }
