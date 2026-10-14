@@ -133,6 +133,7 @@
   },
   "Mentors": {
     "viewProfile": "View profile",
+    "viewProfileNamed": "View profile: {name}",
     "location": "Location",
     "cohort": "ELCA cohort",
     "expertise": "Expertise",

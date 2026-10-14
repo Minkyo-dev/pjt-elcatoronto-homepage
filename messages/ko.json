@@ -133,6 +133,7 @@
   },
   "Mentors": {
     "viewProfile": "프로필 보기",
+    "viewProfileNamed": "{name} 프로필 보기",
     "location": "지역",
     "cohort": "ELCA 기수",
     "expertise": "전문 분야",

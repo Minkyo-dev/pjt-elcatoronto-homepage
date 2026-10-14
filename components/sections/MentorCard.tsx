@@ -37,7 +37,7 @@ export function MentorCard({mentor, onViewProfile}: {mentor: Mentor; onViewProfi
         ) : null}
       </dl>
       <FlagBadges flags={mentor} />
-      <Button variant="secondary" className="mt-auto w-full" aria-haspopup="dialog" aria-label={`${t('viewProfile')}: ${mentor.name}`} onClick={() => onViewProfile(mentor)}>
+      <Button variant="secondary" className="mt-auto w-full" aria-haspopup="dialog" aria-label={t('viewProfileNamed', {name: mentor.name})} onClick={() => onViewProfile(mentor)}>
         {t('viewProfile')}
       </Button>
     </article>
