@@ -2,15 +2,24 @@ import type {Metadata} from 'next';
 import {Section} from '@/components/layout/Section';
 import {HeroCarousel} from '@/components/pages/home/HeroCarousel';
 import {CardGrid} from '@/components/sections/CardGrid';
+import {ContentCard} from '@/components/sections/ContentCard';
+import {FAQSection} from '@/components/sections/FAQSection';
+import {GetInvolvedCards} from '@/components/sections/GetInvolvedCards';
+import {MentorShowcase} from '@/components/sections/MentorShowcase';
 import {SectionHeading} from '@/components/sections/SectionHeading';
 import {SponsorBar} from '@/components/sections/SponsorBar';
 import {StatGrid} from '@/components/sections/StatGrid';
+import {TestimonialScroller} from '@/components/sections/TestimonialScroller';
 import {Button} from '@/components/ui/Button';
 import {FlagBadges} from '@/components/ui/FlagBadges';
+import {getLatestHighlights} from '@/lib/content/content';
 import {getCoreValues} from '@/lib/content/core-values';
+import {getFaqs} from '@/lib/content/faq';
+import {getFeaturedMentors} from '@/lib/content/mentors';
 import {getHomePage} from '@/lib/content/pages';
 import {getSponsors} from '@/lib/content/sponsors';
 import {getStats} from '@/lib/content/stats';
+import {getTestimonials} from '@/lib/content/testimonials';
 import {assertLocale} from '@/lib/i18n/locale';
 import {buildPageMetadata} from '@/lib/i18n/metadata';
 
@@ -28,11 +37,15 @@ export async function generateMetadata({params}: PageProps<'/[locale]'>): Promis
 
 export default async function HomePage({params}: PageProps<'/[locale]'>) {
   const locale = assertLocale((await params).locale);
-  const [page, sponsors, values, stats] = await Promise.all([
+  const [page, sponsors, values, stats, mentors, highlights, testimonials, faqs] = await Promise.all([
     getHomePage(locale),
     getSponsors(locale),
     getCoreValues(locale),
     getStats(locale, 'home'),
+    getFeaturedMentors(locale),
+    getLatestHighlights(locale, 3),
+    getTestimonials(locale),
+    getFaqs(locale, 'home'),
   ]);
 
   return (
@@ -75,6 +88,53 @@ export default async function HomePage({params}: PageProps<'/[locale]'>) {
         <FlagBadges flags={page.mentorshipPreview} className="mb-6" />
         <CardGrid cards={page.mentorshipPreview.items} columns={3} />
       </Section>
+
+      <Section id="featured-mentors" labelledBy="featured-mentors-title" tone="surface">
+        <SectionHeading
+          id="featured-mentors-title"
+          eyebrow={page.featuredMentors.eyebrow}
+          title={page.featuredMentors.title}
+          intro={page.featuredMentors.intro}
+          action={
+            <Button href={page.featuredMentors.cta.href} variant="secondary">
+              {page.featuredMentors.cta.label}
+            </Button>
+          }
+        />
+        <MentorShowcase mentors={mentors} layout="carousel" label={page.featuredMentors.title} />
+      </Section>
+
+      <Section id="highlights" labelledBy="highlights-title">
+        <SectionHeading
+          id="highlights-title"
+          eyebrow={page.highlights.eyebrow}
+          title={page.highlights.title}
+          action={
+            <Button href={page.highlights.cta.href} variant="secondary">
+              {page.highlights.cta.label}
+            </Button>
+          }
+        />
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {highlights.map((item) => (
+            <li key={item.slug}>
+              <ContentCard item={item} />
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="testimonials" labelledBy="testimonials-title" tone="surface">
+        <SectionHeading id="testimonials-title" eyebrow={page.testimonials.eyebrow} title={page.testimonials.title} />
+        <TestimonialScroller testimonials={testimonials} label={page.testimonials.title} />
+      </Section>
+
+      <Section id="get-involved" labelledBy="get-involved-title">
+        <SectionHeading id="get-involved-title" eyebrow={page.getInvolved.eyebrow} title={page.getInvolved.title} align="center" />
+        <GetInvolvedCards cards={page.getInvolved.cards} />
+      </Section>
+
+      <FAQSection intro={page.faq} faqs={faqs} tone="surface" />
     </>
   );
 }

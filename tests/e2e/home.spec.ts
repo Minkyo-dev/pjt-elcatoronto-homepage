@@ -103,3 +103,58 @@ test.describe('home — sponsors, purpose, impact, mentorship preview', () => {
     await expect(page.getByRole('region', {name: '함께하는 후원사'})).toBeVisible();
   });
 });
+
+test.describe('home — mentors, highlights, testimonials, get involved, FAQ', () => {
+  test('featured mentor cards open a profile dialog', async ({page}) => {
+    await page.goto('/en');
+    const section = page.getByRole('region', {name: 'Meet some of our mentors'});
+    await expect(section.getByRole('article')).toHaveCount(4);
+    await expect(section.getByRole('link', {name: 'View all mentors'})).toHaveAttribute('href', '/en/get-involved/mentors');
+    const open = section.getByRole('button', {name: 'View profile: Jiwon Kim'});
+    await open.click();
+    const dialog = page.getByRole('dialog', {name: 'Jiwon Kim'});
+    await expect(dialog).toContainText('Product Manager');
+    await expect(dialog).toContainText('Product strategy');
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+    await expect(open).toBeFocused();
+  });
+
+  test('highlights link to upcoming event detail pages', async ({page}) => {
+    await page.goto('/en');
+    const section = page.getByRole('region', {name: 'What is happening at ELCA'});
+    await expect(section.getByRole('article')).toHaveCount(3);
+    await expect(section.getByRole('link', {name: 'Winter Networking Night'})).toHaveAttribute(
+      'href',
+      '/en/events-news/winter-networking-night-2026',
+    );
+    await expect(section.getByRole('link', {name: 'View all'})).toHaveAttribute('href', '/en/events-news');
+  });
+
+  test('testimonials scroll horizontally', async ({page}) => {
+    await page.goto('/en');
+    const section = page.getByRole('region', {name: 'In their own words'});
+    const list = section.getByRole('list');
+    await expect(list.getByRole('listitem')).toHaveCount(8);
+    const before = await list.evaluate((el) => el.scrollLeft);
+    await section.getByRole('button', {name: 'Next'}).click();
+    await expect.poll(() => list.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
+  });
+
+  test('get-involved cards point at the three conversions', async ({page}) => {
+    await page.goto('/en');
+    const section = page.getByRole('region', {name: 'Find your place in the community'});
+    await expect(section.getByRole('link', {name: 'Apply for Mentorship'})).toHaveAttribute('href', '/en/get-involved/mentorship');
+    await expect(section.getByRole('link', {name: 'Become a Mentor'})).toHaveAttribute('href', '/en/get-involved/mentors#become-a-mentor');
+    await expect(section.getByRole('link', {name: 'Make a Donation'})).toHaveAttribute('href', '/en/get-involved/donate');
+  });
+
+  test('FAQ is an accordion', async ({page}) => {
+    await page.goto('/en');
+    const section = page.getByRole('region', {name: 'Questions, answered'});
+    const items = section.locator('details');
+    await expect(items).toHaveCount(5);
+    await items.first().locator('summary').click();
+    await expect(items.first()).toHaveAttribute('open', '');
+  });
+});

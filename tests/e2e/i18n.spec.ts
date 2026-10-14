@@ -32,6 +32,6 @@ test('unknown paths render a localized 404 with status 404', async ({page}) => {
 });
 
 test('pages get the default localized title', async ({page}) => {
-  await page.goto('/ko');
+  await page.goto('/ko/no/such/page');
   await expect(page).toHaveTitle('ELCA 토론토 — 멘토십 · 리더십 · 커뮤니티');
 });
