@@ -48,3 +48,31 @@ test('the contact button is not shown on the contact page', async ({page}) => {
   await page.goto('/en/contact');
   await expect(contact(page)).toBeHidden();
 });
+
+test('drawer closes when Back changes the route underneath it', async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'drawer is mobile-only');
+  await page.goto('/en');
+  await page.getByRole('button', {name: 'Open menu'}).click();
+  await page.getByRole('dialog', {name: 'Menu'}).getByRole('link', {name: 'Contact Us'}).click();
+  await expect(page).toHaveURL(/\/en\/contact$/);
+  await page.getByRole('button', {name: 'Open menu'}).click();
+  await expect(page.getByRole('dialog', {name: 'Menu'})).toBeVisible();
+  await page.goBack();
+  await expect(page).toHaveURL(/\/en$/);
+  await expect(page.getByRole('dialog', {name: 'Menu'})).toBeHidden();
+  await expect(contact(page)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('');
+});
+
+test('resizing to the desktop layout closes an open drawer', async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'drawer is mobile-only');
+  await page.setViewportSize({width: 820, height: 1180});
+  await page.goto('/en');
+  await page.getByRole('button', {name: 'Open menu'}).click();
+  await expect(page.getByRole('dialog', {name: 'Menu'})).toBeVisible();
+  await page.setViewportSize({width: 1180, height: 820});
+  await expect(page.getByRole('dialog', {name: 'Menu'})).toBeHidden();
+  expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('');
+  await page.getByRole('banner').getByRole('link', {name: 'Events & News'}).click();
+  await expect(page).toHaveURL(/\/en\/events-news$/);
+});

@@ -1,7 +1,7 @@
 'use client';
 
 import {ChevronDown, Menu} from 'lucide-react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/Button';
 import {Dialog} from '@/components/ui/Dialog';
 import {Link, usePathname} from '@/lib/i18n/navigation';
@@ -14,9 +14,21 @@ const linkClass =
   'flex min-h-12 items-center rounded-button px-3 font-semibold text-text transition-colors duration-150 hover:bg-background aria-[current=page]:text-secondary';
 
 export function MobileNav({items, title, openLabel, donateLabel}: MobileNavProps) {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const close = () => setOpen(false);
+  // Open state is tied to the path it was opened on, so any route change closes the drawer.
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const open = openPath === pathname;
+  const close = () => setOpenPath(null);
+
+  // Crossing into the desktop layout hides this nav; close so no invisible modal remains.
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 64rem)');
+    const onChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpenPath(null);
+    };
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
 
   return (
     <div className="lg:hidden">
@@ -25,7 +37,7 @@ export function MobileNav({items, title, openLabel, donateLabel}: MobileNavProps
         aria-label={openLabel}
         aria-expanded={open}
         aria-controls="mobile-nav"
-        onClick={() => setOpen(true)}
+        onClick={() => setOpenPath(pathname)}
         className="inline-flex size-11 items-center justify-center rounded-button text-primary transition-colors duration-150 hover:bg-background"
       >
         <Menu aria-hidden="true" className="size-6" />
