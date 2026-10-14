@@ -34,7 +34,7 @@ export function buttonClasses({
 }
 
 export function isExternalHref(href: string): boolean {
-  return /^https?:\/\//.test(href);
+  return /^https?:\/\//i.test(href);
 }
 
 type BaseProps = {
@@ -65,7 +65,7 @@ export function Button(props: NativeButtonProps | LinkButtonProps) {
     const {href, ...anchorProps} = rest as Omit<LinkButtonProps, keyof BaseProps>;
     if (isExternalHref(href)) {
       return (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={classes} {...anchorProps}>
+        <a href={href} className={classes} {...anchorProps} target="_blank" rel="noopener noreferrer">
           {content}
         </a>
       );

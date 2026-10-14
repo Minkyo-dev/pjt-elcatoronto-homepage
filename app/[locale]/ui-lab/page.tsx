@@ -2,6 +2,8 @@ import type {Metadata} from 'next';
 import {ArrowRight, SearchX} from 'lucide-react';
 import {notFound} from 'next/navigation';
 import {Section} from '@/components/layout/Section';
+import {UiLabDemos} from '@/components/pages/ui-lab/UiLabDemos';
+import {Accordion} from '@/components/ui/Accordion';
 import {Avatar} from '@/components/ui/Avatar';
 import {Badge} from '@/components/ui/Badge';
 import {Button} from '@/components/ui/Button';
@@ -85,6 +87,24 @@ export default function UiLabPage() {
             action={<Button variant="secondary">Reset</Button>}
           />
         </div>
+      </Section>
+
+      <Section id="interactive" labelledBy="interactive-title">
+        <h2 id="interactive-title" className="mb-6 font-heading text-h2 font-bold">Interactive</h2>
+        <UiLabDemos />
+        <Accordion
+          className="mt-12"
+          items={[
+            {id: 'acc-1', title: 'What is an accordion?', content: <p>It shows and hides content.</p>},
+            {id: 'acc-2', title: 'Can several be open?', content: <p>Yes, each item is independent.</p>},
+          ]}
+        />
+      </Section>
+
+      {/* Tall area so floating UI scroll behaviour can be tested (Task 13). */}
+      <Section id="scroll-area" labelledBy="scroll-title" tone="surface">
+        <h2 id="scroll-title" className="font-heading text-h2 font-bold">Scroll area</h2>
+        <div className="h-[150vh]" aria-hidden="true" />
       </Section>
     </>
   );
