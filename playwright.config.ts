@@ -24,6 +24,6 @@ export default defineConfig({
     url: `http://localhost:${PORT}/en`,
     reuseExistingServer: false,
     timeout: 300_000,
-    env: {NEXT_PUBLIC_ENABLE_UI_LAB: '1'},
+    env: {NEXT_PUBLIC_ENABLE_UI_LAB: '1', ELCA_NOW: '2026-10-13T12:00:00-04:00'},
   },
 });

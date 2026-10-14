@@ -5,6 +5,7 @@ import {resolveLocalized} from '@/lib/i18n/localize';
 import type {Locale} from '@/types/common';
 import type {ContentItem} from '@/types/event';
 import {getEvents, toEventItem} from './events';
+import {currentTime} from './now';
 import {categoryOf} from './helpers/content';
 import {getPosts} from './posts';
 
@@ -21,7 +22,7 @@ export async function getAllContent(locale: Locale, now?: string): Promise<Conte
 export async function getContentBySlug(locale: Locale, slug: string, now?: string): Promise<ContentItem | null> {
   'use cache';
   const event = events.find((doc) => doc.slug === slug);
-  if (event) return {...toEventItem(event, locale, now ? new Date(now) : new Date()), type: 'event'};
+  if (event) return {...toEventItem(event, locale, now ? new Date(now) : currentTime()), type: 'event'};
   const post = posts.find((doc) => doc.slug === slug);
   if (post) return {...resolveLocalized(post, locale), type: 'post'};
   return null;

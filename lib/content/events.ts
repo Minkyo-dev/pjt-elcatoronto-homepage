@@ -4,6 +4,7 @@ import {resolveLocalized} from '@/lib/i18n/localize';
 import type {Locale} from '@/types/common';
 import type {EventDoc, EventItem, EventKind, EventStatus, TimelineYear} from '@/types/event';
 import {buildTimeline, getEventStatus, sortEventItems} from './helpers/events';
+import {currentTime} from './now';
 
 export function toEventItem(doc: EventDoc, locale: Locale, now: Date): EventItem {
   return {...resolveLocalized(doc, locale), status: getEventStatus(doc, now)};
@@ -17,7 +18,7 @@ export async function getEvents(options: {
 }): Promise<EventItem[]> {
   'use cache';
   const {locale, status, kind, now} = options;
-  const current = now ? new Date(now) : new Date();
+  const current = now ? new Date(now) : currentTime();
   const items = events
     .map((doc) => toEventItem(doc, locale, current))
     .filter((event) => (!status || event.status === status) && (!kind || event.kind === kind));
