@@ -17,8 +17,16 @@ test.describe('contact page', () => {
 
   test('ignores unknown or malicious topics', async ({page}) => {
     for (const topic of ['MENTOR', 'unknown', '%3Cscript%3Ealert(1)%3C%2Fscript%3E']) {
+      // Prove the client parses the query at all (the SSR value is always '').
+      await page.goto('/en/contact?topic=mentor');
+      await expect(page.getByLabel(/^Topic/)).toHaveValue('mentor');
+
       await page.goto(`/en/contact?topic=${topic}`);
-      await expect(page.getByLabel(/^Topic/)).toHaveValue('');
+      // An interaction that needs React proves hydration has happened.
+      const form = page.locator('#contact-form');
+      await form.getByRole('button', {name: 'Send Message (Demo)'}).click();
+      await expect(form.getByText('This field is required.')).toHaveCount(4);
+      await expect(form.getByLabel(/^Topic/)).toHaveValue('');
     }
   });
 
@@ -42,7 +50,7 @@ test.describe('contact page', () => {
     await expect(form.getByLabel(/^Full name/)).toHaveValue('');
   });
 
-  test('the Become a Mentor CTA from the mentors page arrives with the topic set', async ({page}) => {
+  test('Korean labels resolve with ?topic=mentor', async ({page}) => {
     await page.goto('/ko/contact?topic=mentor');
     await expect(page.getByLabel(/^문의 주제/)).toHaveValue('mentor');
   });
