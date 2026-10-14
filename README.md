@@ -38,6 +38,14 @@ not wait; wait for `html[data-hydrated="true"]` yourself after a reload.
 UI Lab (component showcase for designers): build with `NEXT_PUBLIC_ENABLE_UI_LAB=1`, then open `/en/ui-lab`.
 It returns 404 otherwise.
 
+## Environment variables
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Base URL for canonical links, Open Graph, and the sitemap. Defaults to `http://localhost:3000`. |
+| `ELCA_NOW` | ISO timestamp that pins the "current time" used for event status and the footer year. E2E sets `2026-10-13T12:00:00-04:00`. Unset, real time is used and live pages revalidate about every 15 minutes (default `cacheLife`). |
+| `NEXT_PUBLIC_ENABLE_UI_LAB` | Set to `1` at build time to expose `/en/ui-lab`. |
+
 ## Routes
 
 `/{en|ko}` + `/`, `/about`, `/about/reports`, `/get-involved/mentorship`, `/get-involved/mentors`,
@@ -46,7 +54,7 @@ It returns 404 otherwise.
 ## Structure
 
 ```
-app/[locale]/         Routes (all statically generated for en + ko)
+app/[locale]/         Routes (prerendered at build for en + ko; dynamic `[slug]` shells revalidate)
 components/ui/        Primitives — the only place (with app/globals.css) that makes visual decisions
 components/layout/    Header, Footer, floating buttons, overlay registry
 components/sections/  Reusable page sections (Hero, cards, FAQ, …)
