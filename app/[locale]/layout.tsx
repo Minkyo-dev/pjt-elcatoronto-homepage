@@ -2,6 +2,7 @@ import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import type {Metadata} from 'next';
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
+import {Header} from '@/components/layout/Header';
 import {OverlayProvider} from '@/components/layout/OverlayProvider';
 import {fontVariables} from '@/lib/fonts';
 import {routing} from '@/lib/i18n/routing';
@@ -32,6 +33,7 @@ export default async function LocaleLayout({children, params}: LayoutProps<'/[lo
       <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
           <OverlayProvider>
+            <Header />
             <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
               {children}
             </main>
