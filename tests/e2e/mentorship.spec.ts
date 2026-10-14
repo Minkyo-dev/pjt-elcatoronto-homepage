@@ -28,6 +28,10 @@ test.describe('mentorship page', () => {
     await dialog.getByRole('button', {name: 'Submit (Demo)'}).click();
     await expect(dialog.getByText('This field is required.')).toHaveCount(4);
     await expect(dialog.getByLabel(/Full name/)).toBeFocused();
+    const interests = dialog.getByRole('group', {name: /Areas of interest/});
+    const describedBy = await interests.getAttribute('aria-describedby');
+    expect(describedBy).toBeTruthy();
+    await expect(dialog.locator(`[id="${describedBy}"]`)).toHaveText('This field is required.');
 
     await dialog.getByLabel(/Full name/).fill('Jiwon Kim');
     await dialog.getByLabel(/^Email/).fill('jiwon@example.com');

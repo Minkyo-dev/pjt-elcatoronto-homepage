@@ -24,6 +24,7 @@ test.describe('mentors page', () => {
     await expect(directory.getByRole('combobox')).toHaveCount(0);
     await directory.getByRole('button', {name: 'Load more'}).click();
     await expect(directory.getByRole('article')).toHaveCount(18);
+    await expect(directory.getByRole('article').nth(12).getByRole('button')).toBeFocused();
     await expect(directory.getByRole('button', {name: 'Load more'})).toHaveCount(0);
   });
 

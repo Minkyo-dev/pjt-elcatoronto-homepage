@@ -44,6 +44,15 @@ test.describe('events & news page', () => {
     await expect(page).toHaveURL(/\/en\/events-news$/);
   });
 
+  test('"View Upcoming Events" from the Stories tab switches to All and scrolls to upcoming', async ({page}) => {
+    await page.goto('/en/events-news');
+    await page.getByRole('tab', {name: 'Stories'}).click();
+    await expect(page.getByRole('region', {name: 'Upcoming events & workshops'})).toHaveCount(0);
+    await page.getByRole('link', {name: 'View Upcoming Events'}).click();
+    await expect(page.getByRole('tab', {name: 'All'})).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByRole('region', {name: 'Upcoming events & workshops'})).toBeInViewport();
+  });
+
   test('ignores hand-edited category values', async ({page}) => {
     for (const value of ['WORKSHOPS', '%3Cscript%3E', 'unknown']) {
       await page.goto(`/en/events-news?category=${value}`);

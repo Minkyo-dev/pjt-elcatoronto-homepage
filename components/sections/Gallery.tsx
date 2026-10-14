@@ -6,6 +6,7 @@ import {useState} from 'react';
 import {Button} from '@/components/ui/Button';
 import {Dialog} from '@/components/ui/Dialog';
 import {ImageFrame} from '@/components/ui/ImageFrame';
+import {useRevealFocus} from '@/lib/hooks/useRevealFocus';
 import {Link} from '@/lib/i18n/navigation';
 import type {ImageView} from '@/types/common';
 
@@ -15,12 +16,13 @@ export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; lab
   const t = useTranslations('Events');
   const tCommon = useTranslations('Common');
   const [visible, setVisible] = useState(pageSize);
+  const {listRef, reveal} = useRevealFocus<HTMLUListElement>(visible);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const current = openIndex === null ? null : items[openIndex];
 
   return (
     <>
-      <ul aria-label={label} className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <ul ref={listRef} aria-label={label} className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {items.slice(0, visible).map((item, index) => (
           <li key={item.key}>
             <button
@@ -37,7 +39,10 @@ export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; lab
       </ul>
       {visible < items.length ? (
         <div className="mt-8 flex justify-center">
-          <Button variant="secondary" onClick={() => setVisible((count) => count + pageSize)}>
+          <Button variant="secondary" onClick={() => {
+              reveal(visible);
+              setVisible((count) => count + pageSize);
+            }}>
             {tCommon('loadMore')}
           </Button>
         </div>

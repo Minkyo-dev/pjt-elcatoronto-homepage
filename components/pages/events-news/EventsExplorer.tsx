@@ -1,7 +1,7 @@
 'use client';
 
 import {useTranslations} from 'next-intl';
-import {useState, type ReactNode} from 'react';
+import {useEffect, useRef, useState, type ReactNode} from 'react';
 import {Section} from '@/components/layout/Section';
 import {EventCard} from '@/components/sections/EventCard';
 import {EventTimeline} from '@/components/sections/EventTimeline';
@@ -12,6 +12,7 @@ import {Button} from '@/components/ui/Button';
 import {EmptyState} from '@/components/ui/EmptyState';
 import {Tabs} from '@/components/ui/Tabs';
 import {CONTENT_CATEGORIES, matchesCategory} from '@/lib/content/helpers/content';
+import {useRevealFocus} from '@/lib/hooks/useRevealFocus';
 import {useQueryParam} from '@/lib/hooks/useQueryParam';
 import type {SectionIntroView} from '@/types/common';
 import type {ContentCategory, EventItem, Post, TimelineYear} from '@/types/event';
@@ -31,6 +32,7 @@ function CardList({id, intro, items}: {id: string; intro: SectionIntroView; item
   const t = useTranslations('Events');
   const tCommon = useTranslations('Common');
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const {listRef, reveal} = useRevealFocus<HTMLUListElement>(visible);
   return (
     <section id={id} aria-labelledby={`${id}-title`}>
       <SectionHeading id={`${id}-title`} eyebrow={intro.eyebrow} title={intro.title} intro={intro.intro} />
@@ -38,14 +40,18 @@ function CardList({id, intro, items}: {id: string; intro: SectionIntroView; item
         <EmptyState title={t('emptyTitle')} body={t('emptyBody')} />
       ) : (
         <>
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.slice(0, visible).map((item) => (
               <li key={item.key}>{item.node}</li>
             ))}
           </ul>
           {visible < items.length ? (
             <div className="mt-8 flex justify-center">
-              <Button variant="secondary" onClick={() => setVisible((count) => count + PAGE_SIZE)}>
+              <Button variant="secondary" onClick={() => {
+                  reveal(visible);
+                  setVisible((count) => count + PAGE_SIZE);
+                }}
+              >
                 {tCommon('loadMore')}
               </Button>
             </div>
@@ -64,6 +70,23 @@ export function EventsExplorer({upcoming, past, posts, timeline, intros}: Events
   const showEvents = category === 'all' || category === 'workshops' || category === 'events';
   const showPosts = category === 'all' || category === 'stories' || category === 'news';
   const eventMatches = (event: {kind: EventItem['kind']}) => matchesCategory({type: 'event', kind: event.kind}, category);
+
+  // "View Upcoming Events" (#events) must work from the Stories/News tabs, which hide that block.
+  // Only react to the hash being followed (on load or hashchange), never to later tab changes.
+  const eventsHidden = useRef(false);
+  useEffect(() => {
+    eventsHidden.current = !showEvents;
+  }, [showEvents]);
+  useEffect(() => {
+    const followHash = () => {
+      if (window.location.hash !== '#events' || !eventsHidden.current) return;
+      setParam(null);
+      requestAnimationFrame(() => document.getElementById('events')?.scrollIntoView());
+    };
+    followHash();
+    window.addEventListener('hashchange', followHash);
+    return () => window.removeEventListener('hashchange', followHash);
+  }, [setParam]);
 
   const filteredUpcoming = upcoming.filter(eventMatches);
   const filteredPast = past.filter(eventMatches);

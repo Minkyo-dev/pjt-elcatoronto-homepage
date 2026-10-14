@@ -7,6 +7,7 @@ import {MentorShowcase} from '@/components/sections/MentorShowcase';
 import {Button} from '@/components/ui/Button';
 import {EmptyState} from '@/components/ui/EmptyState';
 import {Input} from '@/components/ui/Input';
+import {useRevealFocus} from '@/lib/hooks/useRevealFocus';
 import {filterMentors} from '@/lib/content/helpers/mentors';
 import type {Mentor} from '@/types/mentor';
 
@@ -19,6 +20,7 @@ export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: str
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const {listRef, reveal} = useRevealFocus<HTMLDivElement>(visibleCount);
   const deferredQuery = useDeferredValue(query);
   const results = useMemo(() => filterMentors(mentors, deferredQuery), [mentors, deferredQuery]);
 
@@ -70,11 +72,17 @@ export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: str
           }
         />
       ) : (
-        <MentorShowcase mentors={results.slice(0, visibleCount)} layout="grid" label={label} />
+        <div ref={listRef}>
+          <MentorShowcase mentors={results.slice(0, visibleCount)} layout="grid" label={label} />
+        </div>
       )}
 
       {visibleCount < results.length ? (
-        <Button variant="secondary" className="self-center" onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}>
+        <Button variant="secondary" className="self-center" onClick={() => {
+            reveal(visibleCount);
+            setVisibleCount((count) => count + PAGE_SIZE);
+          }}
+        >
           {tCommon('loadMore')}
         </Button>
       ) : null}

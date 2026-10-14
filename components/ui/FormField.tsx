@@ -1,5 +1,5 @@
 import {useTranslations} from 'next-intl';
-import type {ReactNode} from 'react';
+import {useId, type ReactNode} from 'react';
 import {cn} from '@/lib/utils/cn';
 
 export type FieldA11yProps = {
@@ -82,15 +82,23 @@ export function ChoiceGroup({
   className?: string;
   children: ReactNode;
 }) {
+  const id = useId();
+  const hintId = hint ? `${id}-hint` : undefined;
+  const errorId = error ? `${id}-error` : undefined;
+  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
   return (
-    <fieldset className={cn('flex flex-col gap-2', className)}>
+    <fieldset aria-describedby={describedBy} className={cn('flex flex-col gap-2', className)}>
       <legend className="mb-1 text-sm font-semibold text-text">
         {legend}
         <RequiredMark required={required} tone="default" />
       </legend>
-      {hint ? <p className="text-sm text-muted">{hint}</p> : null}
+      {hint ? (
+        <p id={hintId} className="text-sm text-muted">
+          {hint}
+        </p>
+      ) : null}
       {children}
-      {error ? <p className="text-sm font-medium text-danger">{error}</p> : null}
+      {error ? <p id={errorId} className="text-sm font-medium text-danger">{error}</p> : null}
     </fieldset>
   );
 }
