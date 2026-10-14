@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test('the root URL redirects to the default locale', async ({page}) => {
   await page.goto('/');

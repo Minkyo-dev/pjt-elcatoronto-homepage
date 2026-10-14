@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test.describe('home — hero carousel', () => {
   test('has one h1 and shows the first slide', async ({page}) => {

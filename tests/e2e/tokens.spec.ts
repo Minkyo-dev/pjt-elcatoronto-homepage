@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test('body uses the background token and the English font stack', async ({page}) => {
   await page.goto('/en');

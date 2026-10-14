@@ -1,7 +1,7 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
-const contact = (page: import('@playwright/test').Page) => page.getByRole('link', {name: 'Open the contact page'});
-const top = (page: import('@playwright/test').Page) => page.getByRole('button', {name: 'Back to top'});
+const contact = (page: import('./fixtures').Page) => page.getByRole('link', {name: 'Open the contact page'});
+const top = (page: import('./fixtures').Page) => page.getByRole('button', {name: 'Back to top'});
 
 test('back-to-top appears after 600px and scrolls to the top', async ({page}) => {
   await page.goto('/en/ui-lab');

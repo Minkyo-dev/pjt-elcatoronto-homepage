@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test.describe('about page', () => {
   test('introduces ELCA with a hero and CTA', async ({page}) => {

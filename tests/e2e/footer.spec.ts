@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test('footer shows navigation, contact, social links, and copyright', async ({page}) => {
   await page.goto('/en/ui-lab');

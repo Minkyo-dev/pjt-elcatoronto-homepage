@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test.describe('UI Lab — static primitives', () => {
   test('renders buttons with the right link behaviour', async ({page}) => {

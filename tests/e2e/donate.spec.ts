@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test.describe('donate page', () => {
   test('photo hero CTA jumps to the donation options', async ({page}) => {

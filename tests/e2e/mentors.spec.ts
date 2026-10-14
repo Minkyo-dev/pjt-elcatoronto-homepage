@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test.describe('mentors page', () => {
   test('hero and closing CTA both send mentors to the contact form with the topic set', async ({page}) => {
@@ -21,6 +21,7 @@ test.describe('mentors page', () => {
     const directory = page.getByRole('region', {name: 'All mentors'});
     await expect(directory.getByRole('status')).toHaveText('18 mentors');
     await expect(directory.getByRole('article')).toHaveCount(12);
+    await expect(directory.getByRole('combobox')).toHaveCount(0);
     await directory.getByRole('button', {name: 'Load more'}).click();
     await expect(directory.getByRole('article')).toHaveCount(18);
     await expect(directory.getByRole('button', {name: 'Load more'})).toHaveCount(0);
