@@ -30,7 +30,7 @@ export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; lab
               onClick={() => setOpenIndex(index)}
               className="block w-full overflow-hidden rounded-card"
             >
-              <ImageFrame image={item.image} ratio="1/1" sizes="(min-width: 640px) 33vw, 50vw" rounded={false} />
+              <ImageFrame as="span" image={item.image} ratio="1/1" sizes="(min-width: 640px) 33vw, 50vw" rounded={false} />
             </button>
           </li>
         ))}

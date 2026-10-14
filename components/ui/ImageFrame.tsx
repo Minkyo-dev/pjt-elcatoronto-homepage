@@ -17,12 +17,15 @@ type ImageFrameProps = {
   eager?: boolean;
   rounded?: boolean;
   className?: string;
+  /** Wrapper element; use 'span' inside phrasing-only parents such as <button>. */
+  as?: 'div' | 'span';
 };
 
 /** Fixed aspect-ratio box so images never shift layout. */
-export function ImageFrame({image, ratio = '3/2', sizes, eager, rounded = true, className}: ImageFrameProps) {
+export function ImageFrame({image, ratio = '3/2', sizes, eager, rounded = true, className, as = 'div'}: ImageFrameProps) {
+  const Wrapper = as;
   return (
-    <div className={cn('relative overflow-hidden bg-border', RATIOS[ratio], rounded && 'rounded-card', className)}>
+    <Wrapper className={cn(as === 'span' && 'block', 'relative overflow-hidden bg-border', RATIOS[ratio], rounded && 'rounded-card', className)}>
       <Image
         src={image.url}
         alt={image.alt}
@@ -32,6 +35,6 @@ export function ImageFrame({image, ratio = '3/2', sizes, eager, rounded = true, 
         fetchPriority={eager ? 'high' : undefined}
         className="object-cover"
       />
-    </div>
+    </Wrapper>
   );
 }
