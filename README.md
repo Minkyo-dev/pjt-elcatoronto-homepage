@@ -70,6 +70,6 @@ tests/unit, tests/e2e Vitest and Playwright (e2e fixtures in tests/e2e/fixtures.
 ## Known limitations
 
 - **Event status is computed when a page is rendered.** Mock events are dated 2026-11 → 2027-03 (upcoming)
-  and 2024 → 2026-09 (past). Builds outside that window will show different upcoming/past splits.
+  and 2024-11 → 2026-06 (past). Builds outside that window will show different upcoming/past splits.
 - No CMS, deployment, auth, payments, email, or subscriptions (see `docs/specs/06-roadmap-sanity-vercel.md`).
 - Social icons are lettermarks; the logo is a text wordmark.
