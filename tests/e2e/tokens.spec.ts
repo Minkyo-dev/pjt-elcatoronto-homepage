@@ -23,6 +23,7 @@ test('Korean pages put Noto Sans KR first and relax heading tracking', async ({p
   });
   expect(result.font.split(',')[0]).toContain('Noto Sans KR');
   expect(result.fontSize).toBeGreaterThanOrEqual(36);
+  expect(parseFloat(result.tracking)).toBeGreaterThan(-0.02 * result.fontSize);
 });
 
 test('display heading scales between mobile and desktop', async ({page}, testInfo) => {

@@ -1,5 +1,230 @@
 {
   "Metadata": {
-    "siteName": "ELCA Toronto"
+    "siteName": "ELCA Toronto",
+    "defaultTitle": "ELCA Toronto — Mentorship, Leadership & Community",
+    "titleTemplate": "%s | ELCA Toronto",
+    "defaultDescription": "Connecting people through mentorship, leadership, and community."
+  },
+  "Common": {
+    "skipToContent": "Skip to content",
+    "homeLabel": "ELCA Toronto home",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "loadMore": "Load more",
+    "sample": "Sample",
+    "needsReview": "Needs review",
+    "demo": "Demo",
+    "opensInNewTab": "(opens in a new tab)",
+    "backToTop": "Back to top",
+    "openContact": "Open the contact page",
+    "breadcrumb": "Breadcrumb",
+    "scrollerLabel": "{label} — scroll for more"
+  },
+  "Nav": {
+    "primaryLabel": "Main",
+    "mobileTitle": "Menu",
+    "openMenu": "Open menu",
+    "home": "Home",
+    "about": "About ELCA",
+    "aboutOverview": "About ELCA",
+    "reports": "Reports",
+    "getInvolved": "Get Involved",
+    "mentorship": "Mentorship",
+    "mentors": "Mentors",
+    "donate": "Donate",
+    "eventsNews": "Events & News",
+    "contact": "Contact Us",
+    "languageLabel": "Language",
+    "langEn": "English",
+    "langKo": "한국어"
+  },
+  "Footer": {
+    "explore": "Explore",
+    "getInvolved": "Get Involved",
+    "stayConnected": "Stay Connected",
+    "social": "Social media",
+    "facebook": "ELCA on Facebook",
+    "linkedin": "ELCA on LinkedIn",
+    "email": "Email",
+    "copyright": "© {year} ELCA. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "privacyNote": "(coming soon)"
+  },
+  "Newsletter": {
+    "label": "Email address",
+    "placeholder": "you@example.com",
+    "submit": "Subscribe",
+    "demoNotice": "This is a demo. No subscription was created."
+  },
+  "Forms": {
+    "required": "required",
+    "optional": "optional",
+    "submit": "Submit (Demo)",
+    "demoSuccess": "Demo — nothing was sent. Your input passed validation.",
+    "errorSummary": "Please fix the highlighted fields.",
+    "characterCount": "{count} / {max}",
+    "selectPlaceholder": "Select an option",
+    "fields": {
+      "name": "Full name",
+      "email": "Email",
+      "topic": "Topic",
+      "message": "Message",
+      "school": "School and grade (or program)",
+      "interests": "Areas of interest",
+      "motivation": "Why do you want to join?",
+      "cohort": "ELCA cohort (if any)",
+      "question": "Questions for the organizers",
+      "eventType": "Event type",
+      "title": "Event title",
+      "preferredDate": "Preferred timing",
+      "format": "Format",
+      "description": "Description",
+      "requestTopic": "Topic you would like",
+      "details": "Your request or question"
+    },
+    "topics": {
+      "general": "General inquiry",
+      "mentorship": "Mentorship",
+      "mentor": "Become a Mentor",
+      "donation": "Donation",
+      "event": "Events",
+      "partnership": "Partnership"
+    },
+    "interests": {
+      "business": "Business & entrepreneurship",
+      "technology": "Technology",
+      "healthcare": "Healthcare",
+      "law": "Law",
+      "finance": "Finance & accounting",
+      "engineering": "Engineering",
+      "arts": "Arts & design",
+      "other": "Other"
+    },
+    "eventTypes": {
+      "workshop": "Workshop",
+      "seminar": "Seminar",
+      "networking": "Networking",
+      "other": "Other"
+    },
+    "formats": {
+      "online": "Online",
+      "in-person": "In person",
+      "hybrid": "Hybrid"
+    }
+  },
+  "Errors": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "tooLong": "This is too long.",
+    "min": "The minimum amount is $5.",
+    "max": "The maximum amount is $10,000.",
+    "integer": "Enter a whole-dollar amount.",
+    "number": "Enter a number."
+  },
+  "Carousel": {
+    "label": "Highlights",
+    "slideLabel": "{index} of {total}",
+    "previous": "Previous slide",
+    "next": "Next slide",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow",
+    "goTo": "Go to slide {index}"
+  },
+  "Mentors": {
+    "viewProfile": "View profile",
+    "location": "Location",
+    "cohort": "ELCA cohort",
+    "expertise": "Expertise",
+    "linkedin": "LinkedIn profile",
+    "searchLabel": "Search mentors by name",
+    "searchPlaceholder": "e.g. Jiwon Kim or 김지원",
+    "resultCount": "{count, plural, =0 {No mentors found} one {# mentor} other {# mentors}}",
+    "emptyTitle": "No mentors match your search",
+    "emptyBody": "Try a different spelling, or search in English or Korean.",
+    "clearSearch": "Clear search",
+    "listLabel": "Featured mentors"
+  },
+  "Events": {
+    "tabsLabel": "Filter by category",
+    "categories": {
+      "all": "All",
+      "workshops": "Workshops",
+      "events": "Events",
+      "stories": "Stories",
+      "news": "News"
+    },
+    "location": {
+      "online": "Online",
+      "in-person": "In person",
+      "hybrid": "Hybrid"
+    },
+    "status": {
+      "upcoming": "Upcoming",
+      "past": "Past"
+    },
+    "timelineNow": "Today",
+    "detailsRegister": "Details & register",
+    "readMore": "Read more",
+    "emptyTitle": "Nothing here yet",
+    "emptyBody": "Try another category.",
+    "openPhoto": "Open photo: {alt}",
+    "viewEvent": "View event",
+    "byAuthor": "By {author}",
+    "when": "When",
+    "where": "Where",
+    "audience": "Who it’s for",
+    "capacity": "Capacity",
+    "capacityValue": "{count} people",
+    "agenda": "Agenda",
+    "register": "Register for this event",
+    "registerIntro": "This registration form is a demo. Nothing will be sent.",
+    "registerSubmit": "Register (Demo)",
+    "recap": "Event recap",
+    "related": "Related",
+    "galleryLabel": "Event photos",
+    "hostTab": "Host an Event",
+    "requestTab": "Request an Event",
+    "formsTabsLabel": "Event forms",
+    "questionsTitle": "Event Q&A"
+  },
+  "Donate": {
+    "frequency": "Frequency",
+    "oneTime": "One-time",
+    "monthly": "Monthly",
+    "amount": "Amount",
+    "other": "Other",
+    "otherAmount": "Other amount (CAD)",
+    "summary": "You are giving {amount}{frequency, select, monthly { every month} other {}}.",
+    "summaryEmpty": "Choose an amount to see your impact.",
+    "optionalDetails": "Your details (optional)",
+    "continue": "Continue (Demo)",
+    "noPayment": "Demo — no payment was processed."
+  },
+  "Reports": {
+    "tabsLabel": "Report type",
+    "financial": "Financial Statements",
+    "annual": "Annual Reports",
+    "download": "Download PDF",
+    "unavailable": "Sample — file not available",
+    "emptyTitle": "No reports yet"
+  },
+  "Mentorship": {
+    "applyNow": "Apply Now (Demo)",
+    "applyTitle": "Mentee application (Demo)",
+    "nextCohort": "Next cohort",
+    "deadline": "Deadline"
+  },
+  "Contact": {
+    "email": "Email",
+    "location": "Location",
+    "social": "Social media",
+    "mapPlaceholder": "Map placeholder — no external map is loaded in this prototype.",
+    "send": "Send Message (Demo)"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you are looking for does not exist or has moved.",
+    "backHome": "Back to home"
   }
 }

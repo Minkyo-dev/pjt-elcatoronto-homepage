@@ -1,8 +1,22 @@
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
+import type {Metadata} from 'next';
+import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {fontVariables} from '@/lib/fonts';
 import {routing} from '@/lib/i18n/routing';
+import {siteUrl} from '@/lib/utils/site';
 import '../globals.css';
+
+export async function generateMetadata({params}: LayoutProps<'/[locale]'>): Promise<Metadata> {
+  const {locale} = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  return {
+    metadataBase: new URL(siteUrl()),
+    title: {default: t('defaultTitle'), template: t('titleTemplate')},
+    description: t('defaultDescription'),
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));

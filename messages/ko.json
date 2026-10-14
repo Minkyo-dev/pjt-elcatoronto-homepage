@@ -1,5 +1,230 @@
 {
   "Metadata": {
-    "siteName": "ELCA 토론토"
+    "siteName": "ELCA 토론토",
+    "defaultTitle": "ELCA 토론토 — 멘토십 · 리더십 · 커뮤니티",
+    "titleTemplate": "%s | ELCA 토론토",
+    "defaultDescription": "멘토십과 리더십, 그리고 커뮤니티로 사람을 잇습니다."
+  },
+  "Common": {
+    "skipToContent": "본문으로 건너뛰기",
+    "homeLabel": "ELCA 토론토 홈",
+    "close": "닫기",
+    "previous": "이전",
+    "next": "다음",
+    "loadMore": "더 보기",
+    "sample": "샘플",
+    "needsReview": "검수 필요",
+    "demo": "데모",
+    "opensInNewTab": "(새 탭에서 열림)",
+    "backToTop": "맨 위로",
+    "openContact": "문의 페이지로 이동",
+    "breadcrumb": "현재 위치",
+    "scrollerLabel": "{label} — 옆으로 스크롤하여 더 보기"
+  },
+  "Nav": {
+    "primaryLabel": "주요 메뉴",
+    "mobileTitle": "메뉴",
+    "openMenu": "메뉴 열기",
+    "home": "홈",
+    "about": "ELCA 소개",
+    "aboutOverview": "ELCA 소개",
+    "reports": "보고서",
+    "getInvolved": "참여하기",
+    "mentorship": "멘토십",
+    "mentors": "멘토",
+    "donate": "후원하기",
+    "eventsNews": "이벤트 & 소식",
+    "contact": "문의하기",
+    "languageLabel": "언어",
+    "langEn": "English",
+    "langKo": "한국어"
+  },
+  "Footer": {
+    "explore": "둘러보기",
+    "getInvolved": "참여하기",
+    "stayConnected": "소식 받기",
+    "social": "소셜 미디어",
+    "facebook": "ELCA 페이스북",
+    "linkedin": "ELCA 링크드인",
+    "email": "이메일",
+    "copyright": "© {year} ELCA. All rights reserved.",
+    "privacy": "개인정보처리방침",
+    "privacyNote": "(준비 중)"
+  },
+  "Newsletter": {
+    "label": "이메일 주소",
+    "placeholder": "you@example.com",
+    "submit": "구독하기",
+    "demoNotice": "데모 화면입니다. 실제로 구독되지 않았습니다."
+  },
+  "Forms": {
+    "required": "필수",
+    "optional": "선택",
+    "submit": "제출하기 (데모)",
+    "demoSuccess": "데모 — 아무것도 전송되지 않았습니다. 입력값 검증을 통과했습니다.",
+    "errorSummary": "표시된 항목을 확인해 주세요.",
+    "characterCount": "{count} / {max}",
+    "selectPlaceholder": "선택해 주세요",
+    "fields": {
+      "name": "이름",
+      "email": "이메일",
+      "topic": "문의 주제",
+      "message": "메시지",
+      "school": "학교와 학년 (또는 소속)",
+      "interests": "관심 분야",
+      "motivation": "지원 동기",
+      "cohort": "ELCA 기수 (해당 시)",
+      "question": "운영진에게 묻고 싶은 점",
+      "eventType": "행사 유형",
+      "title": "행사 제목",
+      "preferredDate": "희망 시기",
+      "format": "진행 방식",
+      "description": "행사 설명",
+      "requestTopic": "원하는 주제",
+      "details": "요청 내용 또는 질문"
+    },
+    "topics": {
+      "general": "일반 문의",
+      "mentorship": "멘토십",
+      "mentor": "멘토 지원",
+      "donation": "후원",
+      "event": "행사",
+      "partnership": "파트너십"
+    },
+    "interests": {
+      "business": "비즈니스 · 창업",
+      "technology": "테크",
+      "healthcare": "헬스케어",
+      "law": "법률",
+      "finance": "금융 · 회계",
+      "engineering": "엔지니어링",
+      "arts": "예술 · 디자인",
+      "other": "기타"
+    },
+    "eventTypes": {
+      "workshop": "워크숍",
+      "seminar": "세미나",
+      "networking": "네트워킹",
+      "other": "기타"
+    },
+    "formats": {
+      "online": "온라인",
+      "in-person": "대면",
+      "hybrid": "하이브리드"
+    }
+  },
+  "Errors": {
+    "required": "필수 입력 항목입니다.",
+    "email": "올바른 이메일 주소를 입력해 주세요.",
+    "tooLong": "입력 내용이 너무 깁니다.",
+    "min": "최소 후원 금액은 $5입니다.",
+    "max": "최대 후원 금액은 $10,000입니다.",
+    "integer": "달러 단위의 정수로 입력해 주세요.",
+    "number": "숫자를 입력해 주세요."
+  },
+  "Carousel": {
+    "label": "주요 소식",
+    "slideLabel": "{total}개 중 {index}번째",
+    "previous": "이전 슬라이드",
+    "next": "다음 슬라이드",
+    "pause": "슬라이드 일시정지",
+    "play": "슬라이드 재생",
+    "goTo": "{index}번째 슬라이드로 이동"
+  },
+  "Mentors": {
+    "viewProfile": "프로필 보기",
+    "location": "지역",
+    "cohort": "ELCA 기수",
+    "expertise": "전문 분야",
+    "linkedin": "링크드인 프로필",
+    "searchLabel": "멘토 이름으로 검색",
+    "searchPlaceholder": "예: 김지원 또는 Jiwon Kim",
+    "resultCount": "{count, plural, =0 {검색된 멘토가 없습니다} other {멘토 #명}}",
+    "emptyTitle": "검색 결과가 없습니다",
+    "emptyBody": "철자를 확인하거나 영문 또는 한글 이름으로 검색해 보세요.",
+    "clearSearch": "검색어 지우기",
+    "listLabel": "추천 멘토"
+  },
+  "Events": {
+    "tabsLabel": "카테고리로 보기",
+    "categories": {
+      "all": "전체",
+      "workshops": "워크숍",
+      "events": "행사",
+      "stories": "이야기",
+      "news": "소식"
+    },
+    "location": {
+      "online": "온라인",
+      "in-person": "대면",
+      "hybrid": "하이브리드"
+    },
+    "status": {
+      "upcoming": "예정",
+      "past": "지난 행사"
+    },
+    "timelineNow": "오늘",
+    "detailsRegister": "자세히 보기 · 신청",
+    "readMore": "더 읽기",
+    "emptyTitle": "아직 등록된 항목이 없습니다",
+    "emptyBody": "다른 카테고리를 선택해 보세요.",
+    "openPhoto": "사진 크게 보기: {alt}",
+    "viewEvent": "행사 보기",
+    "byAuthor": "글 {author}",
+    "when": "일시",
+    "where": "장소",
+    "audience": "대상",
+    "capacity": "정원",
+    "capacityValue": "{count}명",
+    "agenda": "진행 순서",
+    "register": "행사 참가 신청",
+    "registerIntro": "데모 신청 양식입니다. 입력한 내용은 전송되지 않습니다.",
+    "registerSubmit": "신청하기 (데모)",
+    "recap": "행사 돌아보기",
+    "related": "관련 글",
+    "galleryLabel": "행사 사진",
+    "hostTab": "행사 개설 제안",
+    "requestTab": "행사 요청",
+    "formsTabsLabel": "행사 양식",
+    "questionsTitle": "행사 Q&A"
+  },
+  "Donate": {
+    "frequency": "후원 방식",
+    "oneTime": "일시 후원",
+    "monthly": "월 정기",
+    "amount": "금액",
+    "other": "직접 입력",
+    "otherAmount": "직접 입력 금액 (CAD)",
+    "summary": "{frequency, select, monthly {매월 } other {}}{amount}을 후원합니다.",
+    "summaryEmpty": "금액을 선택하면 후원의 효과를 볼 수 있어요.",
+    "optionalDetails": "후원자 정보 (선택)",
+    "continue": "다음 (데모)",
+    "noPayment": "데모 — 실제 결제는 진행되지 않았습니다."
+  },
+  "Reports": {
+    "tabsLabel": "보고서 종류",
+    "financial": "재무제표",
+    "annual": "연차 보고서",
+    "download": "PDF 다운로드",
+    "unavailable": "샘플 — 파일 없음",
+    "emptyTitle": "등록된 보고서가 없습니다"
+  },
+  "Mentorship": {
+    "applyNow": "지금 지원하기 (데모)",
+    "applyTitle": "멘티 지원서 (데모)",
+    "nextCohort": "다음 기수",
+    "deadline": "마감"
+  },
+  "Contact": {
+    "email": "이메일",
+    "location": "위치",
+    "social": "소셜 미디어",
+    "mapPlaceholder": "지도 자리 — 이 시안에서는 외부 지도를 불러오지 않습니다.",
+    "send": "메시지 보내기 (데모)"
+  },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "body": "찾으시는 페이지가 없거나 주소가 바뀌었습니다.",
+    "backHome": "홈으로 돌아가기"
   }
 }
