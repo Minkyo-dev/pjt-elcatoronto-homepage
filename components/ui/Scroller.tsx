@@ -3,6 +3,7 @@
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRef, type ReactNode} from 'react';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 import {prefersReducedMotion} from '@/lib/utils/motion';
 
@@ -11,13 +12,14 @@ type ScrollerProps = {
   items: {key: string; node: ReactNode}[];
   /** Width classes for each item, e.g. 'w-[85%] sm:w-[45%] lg:w-[calc((100%-3rem)/3)]'. */
   itemClassName?: string;
+  cid?: string;
 };
 
 const controlClass =
   'inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-primary transition-colors duration-150 hover:bg-background';
 
 /** Horizontal, snap-scrolling list. The list itself is focusable so arrow keys scroll it. */
-export function Scroller({label, items, itemClassName = 'w-[85%] sm:w-[45%] lg:w-[calc((100%-3rem)/3)]'}: ScrollerProps) {
+export function Scroller({label, items, itemClassName = 'w-[85%] sm:w-[45%] lg:w-[calc((100%-3rem)/3)]', cid}: ScrollerProps) {
   const t = useTranslations('Common');
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -30,7 +32,7 @@ export function Scroller({label, items, itemClassName = 'w-[85%] sm:w-[45%] lg:w
   }
 
   return (
-    <div>
+    <div {...cidAttrs(cid, 'Scroller')}>
       <div className="mb-4 flex justify-end gap-2">
         <button type="button" onClick={() => scrollByItem(-1)} aria-label={t('previous')} className={controlClass}>
           <ChevronLeft aria-hidden="true" className="size-5" />

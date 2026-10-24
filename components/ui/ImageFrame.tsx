@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 import type {ImageView} from '@/types/common';
 
@@ -19,13 +20,17 @@ type ImageFrameProps = {
   className?: string;
   /** Wrapper element; use 'span' inside phrasing-only parents such as <button>. */
   as?: 'div' | 'span';
+  cid?: string;
 };
 
 /** Fixed aspect-ratio box so images never shift layout. */
-export function ImageFrame({image, ratio = '3/2', sizes, eager, rounded = true, className, as = 'div'}: ImageFrameProps) {
+export function ImageFrame({image, ratio = '3/2', sizes, eager, rounded = true, className, as = 'div', cid}: ImageFrameProps) {
   const Wrapper = as;
   return (
-    <Wrapper className={cn(as === 'span' && 'block', 'relative overflow-hidden bg-border', RATIOS[ratio], rounded && 'rounded-card', className)}>
+    <Wrapper
+      className={cn(as === 'span' && 'block', 'relative overflow-hidden bg-border', RATIOS[ratio], rounded && 'rounded-card', className)}
+      {...cidAttrs(cid, 'ImageFrame')}
+    >
       <Image
         src={image.url}
         alt={image.alt}

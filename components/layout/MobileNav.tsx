@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/Button';
 import {Dialog} from '@/components/ui/Dialog';
 import {Link, usePathname} from '@/lib/i18n/navigation';
 import {isCurrent, isNavGroup, isWithin, type NavItem} from '@/lib/navigation/site-nav';
+import {cidAttrs} from '@/lib/utils/cid';
 import {LanguageSwitcher} from './LanguageSwitcher';
 
 type MobileNavProps = {items: NavItem[]; title: string; openLabel: string; donateLabel: string};
@@ -34,6 +35,7 @@ export function MobileNav({items, title, openLabel, donateLabel}: MobileNavProps
     <div className="lg:hidden">
       <button
         type="button"
+        {...cidAttrs('GLB-01-05', 'MobileNavButton')}
         aria-label={openLabel}
         aria-expanded={open}
         aria-controls="mobile-nav"
@@ -42,8 +44,8 @@ export function MobileNav({items, title, openLabel, donateLabel}: MobileNavProps
       >
         <Menu aria-hidden="true" className="size-6" />
       </button>
-      <Dialog open={open} onClose={close} title={title} variant="drawer">
-        <nav id="mobile-nav" aria-label={title}>
+      <Dialog open={open} onClose={close} title={title} variant="drawer" cid="GLB-02">
+        <nav id="mobile-nav" aria-label={title} {...cidAttrs('GLB-02-01', 'MobileNavLinks')}>
           <ul className="flex flex-col gap-1">
             {items.map((item) =>
               isNavGroup(item) ? (
@@ -84,7 +86,7 @@ export function MobileNav({items, title, openLabel, donateLabel}: MobileNavProps
             )}
           </ul>
         </nav>
-        <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6">
+        <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6" {...cidAttrs('GLB-02-02', 'MobileNavActions')}>
           <LanguageSwitcher onNavigate={close} />
           <Button href="/get-involved/donate" variant="accent" onClick={close}>
             {donateLabel}

@@ -4,6 +4,7 @@ import {Badge} from '@/components/ui/Badge';
 import {FlagBadges} from '@/components/ui/FlagBadges';
 import {ImageFrame} from '@/components/ui/ImageFrame';
 import {Link} from '@/lib/i18n/navigation';
+import {cidAttrs} from '@/lib/utils/cid';
 import type {EventItem} from '@/types/event';
 
 export const cardClass =
@@ -11,11 +12,11 @@ export const cardClass =
 export const cardLinkClass = 'after:absolute after:inset-0 focus-visible:outline-none hover:underline';
 export const cardImageSizes = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw';
 
-export function EventCard({event}: {event: EventItem}) {
+export function EventCard({event, cid}: {event: EventItem; cid?: string}) {
   const t = useTranslations('Events');
   const format = useFormatter();
   return (
-    <article className={cardClass}>
+    <article className={cardClass} {...cidAttrs(cid, 'EventCard')}>
       <ImageFrame image={event.coverImage} ratio="3/2" sizes={cardImageSizes} rounded={false} />
       <div className="flex flex-1 flex-col gap-3 p-6">
         <div className="flex flex-wrap items-center gap-2">

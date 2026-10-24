@@ -7,9 +7,11 @@ import {Button} from '@/components/ui/Button';
 import {EmptyState} from '@/components/ui/EmptyState';
 import {FlagBadges} from '@/components/ui/FlagBadges';
 import {Tabs} from '@/components/ui/Tabs';
+import {cidAttrs, itemCid, subCid} from '@/lib/utils/cid';
 import type {Report, ReportKind} from '@/types/misc';
 
-export function ReportsTabs({reports}: {reports: Report[]}) {
+/** `cid` is the enclosing section's ID; the tabs and the report list are labelled as its components. */
+export function ReportsTabs({reports, cid}: {reports: Report[]; cid?: string}) {
   const t = useTranslations('Reports');
   const [kind, setKind] = useState<ReportKind>('financial');
   const visible = reports.filter((report) => report.kind === kind);
@@ -23,15 +25,17 @@ export function ReportsTabs({reports}: {reports: Report[]}) {
       ]}
       value={kind}
       onValueChange={(id) => setKind(id as ReportKind)}
+      cid={subCid(cid, 1)}
     >
       {visible.length === 0 ? (
-        <EmptyState title={t('emptyTitle')} />
+        <EmptyState title={t('emptyTitle')} cid={subCid(cid, 2)} />
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-4" {...cidAttrs(subCid(cid, 2), 'ReportList')}>
           {visible.map((report) => (
             <li
               key={report._id}
               className="flex flex-col gap-4 rounded-card border border-border bg-surface p-6 sm:flex-row sm:items-center sm:justify-between"
+              {...cidAttrs(itemCid(subCid(cid, 2)), 'ReportRow')}
             >
               <div className="flex items-start gap-4">
                 <span className="font-heading text-h3 font-extrabold text-secondary">{report.year}</span>

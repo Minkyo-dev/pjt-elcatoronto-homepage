@@ -3,13 +3,16 @@ import {useTranslations} from 'next-intl';
 import {Avatar} from '@/components/ui/Avatar';
 import {Button} from '@/components/ui/Button';
 import {FlagBadges} from '@/components/ui/FlagBadges';
+import {cidAttrs} from '@/lib/utils/cid';
 import type {Mentor} from '@/types/mentor';
 
 /** Name, job, company, location, and ELCA cohort — no photo or rating (spec D5). Render inside a client component. */
-export function MentorCard({mentor, onViewProfile}: {mentor: Mentor; onViewProfile: (mentor: Mentor) => void}) {
+type MentorCardProps = {mentor: Mentor; onViewProfile: (mentor: Mentor) => void; cid?: string};
+
+export function MentorCard({mentor, onViewProfile, cid}: MentorCardProps) {
   const t = useTranslations('Mentors');
   return (
-    <article className="flex h-full flex-col gap-4 rounded-card border border-border bg-surface p-6">
+    <article className="flex h-full flex-col gap-4 rounded-card border border-border bg-surface p-6" {...cidAttrs(cid, 'MentorCard')}>
       <div className="flex items-start gap-4">
         <Avatar name={mentor.name} seed={mentor.slug} size="lg" />
         <div className="min-w-0">

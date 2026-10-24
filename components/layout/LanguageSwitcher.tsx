@@ -4,11 +4,14 @@ import {useLocale, useTranslations} from 'next-intl';
 import {Fragment, type MouseEvent} from 'react';
 import {Link, usePathname, useRouter} from '@/lib/i18n/navigation';
 import {routing, type Locale} from '@/lib/i18n/routing';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 
 const SHORT_LABEL: Record<Locale, string> = {en: 'EN', ko: 'KO'};
 
-export function LanguageSwitcher({className, onNavigate}: {className?: string; onNavigate?: () => void}) {
+type LanguageSwitcherProps = {className?: string; onNavigate?: () => void; cid?: string};
+
+export function LanguageSwitcher({className, onNavigate, cid}: LanguageSwitcherProps) {
   const t = useTranslations('Nav');
   const current = useLocale();
   const pathname = usePathname();
@@ -29,7 +32,12 @@ export function LanguageSwitcher({className, onNavigate}: {className?: string; o
   }
 
   return (
-    <div role="group" aria-label={t('languageLabel')} className={cn('flex items-center gap-1 text-sm font-semibold', className)}>
+    <div
+      role="group"
+      aria-label={t('languageLabel')}
+      className={cn('flex items-center gap-1 text-sm font-semibold', className)}
+      {...cidAttrs(cid, 'LanguageSwitcher')}
+    >
       {routing.locales.map((locale, index) => (
         <Fragment key={locale}>
           {index > 0 ? (

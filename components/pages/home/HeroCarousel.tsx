@@ -8,6 +8,7 @@ import {Container} from '@/components/layout/Container';
 import {Button} from '@/components/ui/Button';
 import {FlagBadges} from '@/components/ui/FlagBadges';
 import {usePrefersReducedMotion} from '@/lib/hooks/usePrefersReducedMotion';
+import {cidAttrs, itemCid, subCid} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 import type {HeroSlideView} from '@/types/pages';
 
@@ -15,7 +16,7 @@ const INTERVAL_MS = 7000;
 const controlClass =
   'inline-flex size-11 items-center justify-center rounded-full border border-on-primary/60 text-on-primary transition-colors duration-150 hover:bg-on-primary hover:text-primary';
 
-export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
+export function HeroCarousel({slides, cid}: {slides: HeroSlideView[]; cid?: string}) {
   const t = useTranslations('Carousel');
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
@@ -38,6 +39,7 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
       aria-label={t('label')}
       data-autoplay={autoplay}
       className="on-dark relative isolate overflow-hidden bg-primary text-on-primary"
+      {...cidAttrs(cid, 'HeroCarousel')}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -45,7 +47,7 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
       }}
     >
-      <div aria-live={autoplay ? 'off' : 'polite'}>
+      <div aria-live={autoplay ? 'off' : 'polite'} {...cidAttrs(subCid(cid, 1), 'Slides')}>
         {slides.map((slide, slideIndex) => (
           <div
             key={slide.key}
@@ -54,6 +56,7 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
             aria-label={t('slideLabel', {index: slideIndex + 1, total: slides.length})}
             hidden={slideIndex !== index}
             className="relative"
+            {...cidAttrs(itemCid(subCid(cid, 1)), 'Slide')}
           >
             <Image
               src={slide.media.image.url}
@@ -67,12 +70,20 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-overlay" />
             <Container className="flex min-h-[32rem] flex-col justify-end gap-5 pb-28 pt-20 lg:min-h-[38rem]">
               <div className="flex flex-wrap items-center gap-3">
-                {slide.eyebrow ? <p className="text-eyebrow font-semibold uppercase">{slide.eyebrow}</p> : null}
-                <FlagBadges flags={slide} />
+                {slide.eyebrow ? (
+                  <p className="text-eyebrow font-semibold uppercase" {...cidAttrs(subCid(cid, 2), 'SlideEyebrow')}>
+                    {slide.eyebrow}
+                  </p>
+                ) : null}
+                <FlagBadges flags={slide} cid={subCid(cid, 3)} />
               </div>
-              <h2 className="max-w-heading font-heading text-display font-extrabold text-balance">{slide.title}</h2>
-              <p className="max-w-body text-lg">{slide.body}</p>
-              <div className="flex flex-wrap gap-3">
+              <h2 className="max-w-heading font-heading text-display font-extrabold text-balance" {...cidAttrs(subCid(cid, 4), 'SlideTitle')}>
+                {slide.title}
+              </h2>
+              <p className="max-w-body text-lg" {...cidAttrs(subCid(cid, 5), 'SlideBody')}>
+                {slide.body}
+              </p>
+              <div className="flex flex-wrap gap-3" {...cidAttrs(subCid(cid, 6), 'SlideCTAs')}>
                 {slide.ctas.map((cta, ctaIndex) => (
                   <Button key={cta.href} href={cta.href} size="lg" variant={ctaIndex === 0 ? 'inverse' : 'on-dark'}>
                     {cta.label}
@@ -85,10 +96,10 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
       </div>
 
       <Container className="absolute inset-x-0 bottom-0 flex flex-wrap items-center gap-2 pb-8">
-        <button type="button" onClick={() => goTo(index - 1)} aria-label={t('previous')} className={controlClass}>
+        <button type="button" onClick={() => goTo(index - 1)} aria-label={t('previous')} className={controlClass} {...cidAttrs(subCid(cid, 7), 'PrevButton')}>
           <ChevronLeft aria-hidden="true" className="size-5" />
         </button>
-        <button type="button" onClick={() => goTo(index + 1)} aria-label={t('next')} className={controlClass}>
+        <button type="button" onClick={() => goTo(index + 1)} aria-label={t('next')} className={controlClass} {...cidAttrs(subCid(cid, 8), 'NextButton')}>
           <ChevronRight aria-hidden="true" className="size-5" />
         </button>
         <button
@@ -96,10 +107,11 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
           onClick={() => setPlaying((current) => !current)}
           aria-label={playing ? t('pause') : t('play')}
           className={controlClass}
+          {...cidAttrs(subCid(cid, 9), 'PlayPauseButton')}
         >
           {playing ? <Pause aria-hidden="true" className="size-5" /> : <Play aria-hidden="true" className="size-5" />}
         </button>
-        <div className="ms-2 flex">
+        <div className="ms-2 flex" {...cidAttrs(subCid(cid, 10), 'SlideIndicators')}>
           {slides.map((slide, slideIndex) => (
             <button
               key={slide.key}
@@ -108,6 +120,7 @@ export function HeroCarousel({slides}: {slides: HeroSlideView[]}) {
               aria-label={t('goTo', {index: slideIndex + 1})}
               aria-current={slideIndex === index ? 'true' : undefined}
               className="group inline-flex size-11 items-center justify-center"
+              {...cidAttrs(itemCid(subCid(cid, 10)), 'SlideIndicator')}
             >
               <span
                 aria-hidden="true"

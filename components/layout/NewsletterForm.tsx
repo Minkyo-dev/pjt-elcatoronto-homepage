@@ -7,16 +7,17 @@ import {FormFeedback} from '@/components/ui/FormFeedback';
 import {FormField} from '@/components/ui/FormField';
 import {Input} from '@/components/ui/Input';
 import {useDemoForm} from '@/lib/forms/useDemoForm';
+import {cidAttrs} from '@/lib/utils/cid';
 import {newsletterSchema} from '@/lib/validation/forms';
 
-export function NewsletterForm() {
+export function NewsletterForm({cid}: {cid?: string}) {
   const t = useTranslations('Newsletter');
   const tErrors = useTranslations('Errors');
   const id = useId();
   const {formRef, ...form} = useDemoForm(newsletterSchema, {email: ''});
 
   return (
-    <form ref={formRef} onSubmit={form.handleSubmit} noValidate className="flex flex-col gap-3">
+    <form ref={formRef} onSubmit={form.handleSubmit} noValidate className="flex flex-col gap-3" {...cidAttrs(cid, 'NewsletterForm')}>
       <FormField
         id={`${id}-email`}
         label={t('label')}

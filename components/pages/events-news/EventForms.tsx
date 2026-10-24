@@ -8,9 +8,10 @@ import {ChoiceGroup, FormField} from '@/components/ui/FormField';
 import {Input, Select, Textarea} from '@/components/ui/Input';
 import {Tabs} from '@/components/ui/Tabs';
 import {useDemoForm} from '@/lib/forms/useDemoForm';
+import {cidAttrs} from '@/lib/utils/cid';
 import {EVENT_FORMATS, EVENT_TYPES, hostEventSchema, requestEventSchema} from '@/lib/validation/forms';
 
-function HostEventForm({intro}: {intro: string}) {
+function HostEventForm({intro, cid}: {intro: string; cid?: string}) {
   const tForms = useTranslations('Forms');
   const id = useId();
   const {formRef, ...form} = useDemoForm(hostEventSchema, {
@@ -44,7 +45,7 @@ function HostEventForm({intro}: {intro: string}) {
   );
 
   return (
-    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5">
+    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5" {...cidAttrs(cid, 'HostEventForm')}>
       <p className="max-w-body text-muted">{intro}</p>
       <div className="grid gap-5 sm:grid-cols-2">
         {text('name', true)}
@@ -111,7 +112,7 @@ function HostEventForm({intro}: {intro: string}) {
   );
 }
 
-function RequestEventForm({intro}: {intro: string}) {
+function RequestEventForm({intro, cid}: {intro: string; cid?: string}) {
   const tForms = useTranslations('Forms');
   const id = useId();
   const {formRef, ...form} = useDemoForm(requestEventSchema, {name: '', email: '', topic: '', details: ''});
@@ -122,7 +123,7 @@ function RequestEventForm({intro}: {intro: string}) {
   };
 
   return (
-    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5">
+    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5" {...cidAttrs(cid, 'RequestEventForm')}>
       <p className="max-w-body text-muted">{intro}</p>
       <div className="grid gap-5 sm:grid-cols-2">
         <FormField id={`${id}-name`} label={tForms('fields.name')} required error={errorFor('name')}>
@@ -168,7 +169,8 @@ function RequestEventForm({intro}: {intro: string}) {
   );
 }
 
-export function EventForms({hostIntro, requestIntro}: {hostIntro: string; requestIntro: string}) {
+/** `cid` labels the tabs, `formCid` the active form (both components of the host section). */
+export function EventForms({hostIntro, requestIntro, cid, formCid}: {hostIntro: string; requestIntro: string; cid?: string; formCid?: string}) {
   const t = useTranslations('Events');
   const [tab, setTab] = useState<'host' | 'request'>('host');
   return (
@@ -180,8 +182,9 @@ export function EventForms({hostIntro, requestIntro}: {hostIntro: string; reques
       ]}
       value={tab}
       onValueChange={(id) => setTab(id as 'host' | 'request')}
+      cid={cid}
     >
-      {tab === 'host' ? <HostEventForm intro={hostIntro} /> : <RequestEventForm intro={requestIntro} />}
+      {tab === 'host' ? <HostEventForm intro={hostIntro} cid={formCid} /> : <RequestEventForm intro={requestIntro} cid={formCid} />}
     </Tabs>
   );
 }

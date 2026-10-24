@@ -13,6 +13,7 @@ import {getFaqs} from '@/lib/content/faq';
 import {getDonatePage} from '@/lib/content/pages';
 import {assertLocale} from '@/lib/i18n/locale';
 import {buildPageMetadata} from '@/lib/i18n/metadata';
+import {cidAttrs} from '@/lib/utils/cid';
 
 export async function generateMetadata({params}: PageProps<'/[locale]/get-involved/donate'>): Promise<Metadata> {
   const locale = assertLocale((await params).locale);
@@ -37,19 +38,19 @@ export default async function DonatePage({params}: PageProps<'/[locale]/get-invo
 
   return (
     <>
-      <Hero hero={page.hero} variant="photo" />
+      <Hero hero={page.hero} variant="photo" cid="DON-01" />
 
-      <Section id="why-donate" labelledBy="why-title">
-        <SectionHeading id="why-title" eyebrow={page.why.eyebrow} title={page.why.title} intro={page.why.body} />
-        <FlagBadges flags={page.why} className="mb-6" />
-        <CardGrid cards={page.why.points} columns={3} />
+      <Section id="why-donate" labelledBy="why-title" cid="DON-02">
+        <SectionHeading id="why-title" eyebrow={page.why.eyebrow} title={page.why.title} intro={page.why.body} cid="DON-02-01" />
+        <FlagBadges flags={page.why} className="mb-6" cid="DON-02-02" />
+        <CardGrid cards={page.why.points} columns={3} cid="DON-02-03" />
       </Section>
 
-      <Section id="donation-impact" labelledBy="impact-title" tone="surface">
-        <SectionHeading id="impact-title" eyebrow={page.impact.eyebrow} title={page.impact.title} intro={page.impact.intro} />
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <Section id="donation-impact" labelledBy="impact-title" tone="surface" cid="DON-03">
+        <SectionHeading id="impact-title" eyebrow={page.impact.eyebrow} title={page.impact.title} intro={page.impact.intro} cid="DON-03-01" />
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" {...cidAttrs('DON-03-02', 'ImpactTierList')}>
           {tiers.map((tier) => (
-            <li key={tier._id} className="flex flex-col gap-3 rounded-card border border-border bg-background p-6">
+            <li key={tier._id} className="flex flex-col gap-3 rounded-card border border-border bg-background p-6" {...cidAttrs('DON-03-02a', 'ImpactTier')}>
               <p className="font-heading text-h2 font-extrabold text-accent-strong">
                 {format.number(tier.amount, {style: 'currency', currency: 'CAD', maximumFractionDigits: 0})}
               </p>
@@ -60,17 +61,17 @@ export default async function DonatePage({params}: PageProps<'/[locale]/get-invo
         </ul>
       </Section>
 
-      <Section id="how-funds-are-used" labelledBy="usage-title">
-        <SectionHeading id="usage-title" eyebrow={page.fundUsage.eyebrow} title={page.fundUsage.title} />
-        <FundUsage items={page.fundUsage.items} flags={page.fundUsage} />
+      <Section id="how-funds-are-used" labelledBy="usage-title" cid="DON-04">
+        <SectionHeading id="usage-title" eyebrow={page.fundUsage.eyebrow} title={page.fundUsage.title} cid="DON-04-01" />
+        <FundUsage items={page.fundUsage.items} flags={page.fundUsage} cid="DON-04" />
       </Section>
 
-      <Section id="donation-options" labelledBy="options-title" tone="surface">
-        <SectionHeading id="options-title" eyebrow={page.options.eyebrow} title={page.options.title} intro={page.options.intro} />
-        <DonationSelector tiers={tiers} />
+      <Section id="donation-options" labelledBy="options-title" tone="surface" cid="DON-05">
+        <SectionHeading id="options-title" eyebrow={page.options.eyebrow} title={page.options.title} intro={page.options.intro} cid="DON-05-01" />
+        <DonationSelector tiers={tiers} cid="DON-05-02" />
       </Section>
 
-      <FAQSection intro={page.faq} faqs={faqs} />
+      <FAQSection intro={page.faq} faqs={faqs} cid="DON-06" />
     </>
   );
 }

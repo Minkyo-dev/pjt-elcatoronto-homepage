@@ -3,14 +3,15 @@ import {Badge} from '@/components/ui/Badge';
 import {FlagBadges} from '@/components/ui/FlagBadges';
 import {ImageFrame} from '@/components/ui/ImageFrame';
 import {Link} from '@/lib/i18n/navigation';
+import {cidAttrs} from '@/lib/utils/cid';
 import type {Post} from '@/types/event';
 import {cardClass, cardImageSizes, cardLinkClass} from './EventCard';
 
-export function NewsCard({post}: {post: Post}) {
+export function NewsCard({post, cid}: {post: Post; cid?: string}) {
   const t = useTranslations('Events');
   const format = useFormatter();
   return (
-    <article className={cardClass}>
+    <article className={cardClass} {...cidAttrs(cid, 'NewsCard')}>
       <ImageFrame image={post.coverImage} ratio="3/2" sizes={cardImageSizes} rounded={false} />
       <div className="flex flex-1 flex-col gap-3 p-6">
         <div className="flex flex-wrap items-center gap-2">

@@ -7,13 +7,14 @@ import {FormFeedback} from '@/components/ui/FormFeedback';
 import {ChoiceGroup, FormField} from '@/components/ui/FormField';
 import {Input} from '@/components/ui/Input';
 import {useDemoForm} from '@/lib/forms/useDemoForm';
+import {cidAttrs} from '@/lib/utils/cid';
 import {DONATION_FREQUENCIES, donationSchema} from '@/lib/validation/forms';
 import type {DonationTier} from '@/types/misc';
 
 const optionClass =
   'flex min-h-12 cursor-pointer items-center justify-center rounded-button border border-border-strong bg-surface px-3 text-center font-semibold text-text transition-colors duration-150 hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-secondary has-[:focus-visible]:outline';
 
-export function DonationSelector({tiers}: {tiers: DonationTier[]}) {
+export function DonationSelector({tiers, cid}: {tiers: DonationTier[]; cid?: string}) {
   const t = useTranslations('Donate');
   const tForms = useTranslations('Forms');
   const tErrors = useTranslations('Errors');
@@ -34,7 +35,13 @@ export function DonationSelector({tiers}: {tiers: DonationTier[]}) {
   const amountError = form.errors.amount ? tErrors(form.errors.amount) : undefined;
 
   return (
-    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="grid gap-8 lg:grid-cols-12">
+    <form
+      ref={formRef}
+      noValidate
+      onSubmit={form.handleSubmit}
+      className="grid gap-8 lg:grid-cols-12"
+      {...cidAttrs(cid, 'DonationSelector')}
+    >
       <div className="flex flex-col gap-8 lg:col-span-7">
         <ChoiceGroup legend={t('frequency')} required>
           <div className="grid grid-cols-2 gap-3">

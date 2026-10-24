@@ -5,6 +5,7 @@ import {useTranslations} from 'next-intl';
 import {useEffect, useState} from 'react';
 import {Link, usePathname} from '@/lib/i18n/navigation';
 import {isCurrent} from '@/lib/navigation/site-nav';
+import {cidAttrs} from '@/lib/utils/cid';
 import {prefersReducedMotion} from '@/lib/utils/motion';
 import {useOverlayCount} from './OverlayProvider';
 
@@ -42,7 +43,9 @@ export function FloatingActions() {
   };
 
   return (
-    <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] end-[calc(1rem+env(safe-area-inset-right))] z-30 flex flex-col items-center gap-3">
+    <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] end-[calc(1rem+env(safe-area-inset-right))] z-30 flex flex-col items-center gap-3"
+      {...cidAttrs('GLB-06', 'FloatingActions')}
+    >
       {showTop ? (
         <button
           type="button"

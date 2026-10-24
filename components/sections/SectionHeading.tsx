@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 
 type SectionHeadingProps = {
@@ -11,9 +12,10 @@ type SectionHeadingProps = {
   tone?: 'default' | 'dark';
   action?: ReactNode;
   className?: string;
+  cid?: string;
 };
 
-export function SectionHeading({id, eyebrow, title, intro, align = 'start', tone = 'default', action, className}: SectionHeadingProps) {
+export function SectionHeading({id, eyebrow, title, intro, align = 'start', tone = 'default', action, className, cid}: SectionHeadingProps) {
   const dark = tone === 'dark';
   return (
     <div
@@ -23,6 +25,7 @@ export function SectionHeading({id, eyebrow, title, intro, align = 'start', tone
         align === 'center' && 'items-center text-center',
         className,
       )}
+      {...cidAttrs(cid, 'SectionHeading')}
     >
       <div className={cn('flex max-w-heading flex-col gap-3', align === 'center' && 'items-center')}>
         {eyebrow ? (

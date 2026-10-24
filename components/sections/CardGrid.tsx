@@ -1,4 +1,5 @@
 import {Icon} from '@/components/ui/Icon';
+import {cidAttrs, itemCid} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 import type {CardView} from '@/types/common';
 
@@ -8,11 +9,13 @@ const COLUMNS = {
   4: 'sm:grid-cols-2 lg:grid-cols-4',
 } as const;
 
-export function CardGrid({cards, columns = 3, className}: {cards: CardView[]; columns?: keyof typeof COLUMNS; className?: string}) {
+type CardGridProps = {cards: CardView[]; columns?: keyof typeof COLUMNS; className?: string; cid?: string};
+
+export function CardGrid({cards, columns = 3, className, cid}: CardGridProps) {
   return (
-    <ul className={cn('grid gap-6', COLUMNS[columns], className)}>
+    <ul className={cn('grid gap-6', COLUMNS[columns], className)} {...cidAttrs(cid, 'CardGrid')}>
       {cards.map((card) => (
-        <li key={card.title} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-6">
+        <li key={card.title} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-6" {...cidAttrs(itemCid(cid), 'Card')}>
           {card.icon ? (
             <span className="inline-flex size-12 items-center justify-center rounded-card bg-background text-secondary">
               <Icon name={card.icon} />

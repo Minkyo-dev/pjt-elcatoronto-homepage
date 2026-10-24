@@ -1,6 +1,7 @@
 'use client';
 
 import {useId, useRef, type KeyboardEvent, type ReactNode} from 'react';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 
 export type TabItem = {id: string; label: string};
@@ -12,10 +13,11 @@ type TabsProps = {
   onValueChange: (id: string) => void;
   children: ReactNode;
   className?: string;
+  cid?: string;
 };
 
 /** WAI-ARIA tabs (automatic activation). The parent renders the active panel's content as children. */
-export function Tabs({label, items, value, onValueChange, children, className}: TabsProps) {
+export function Tabs({label, items, value, onValueChange, children, className, cid}: TabsProps) {
   const baseId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeIndex = Math.max(0, items.findIndex((item) => item.id === value));
@@ -41,7 +43,7 @@ export function Tabs({label, items, value, onValueChange, children, className}: 
   }
 
   return (
-    <div className={className}>
+    <div className={className} {...cidAttrs(cid, 'Tabs')}>
       <div role="tablist" aria-label={label} className="flex gap-1 overflow-x-auto border-b border-border">
         {items.map((item, index) => {
           const selected = index === activeIndex;

@@ -14,6 +14,7 @@ import {Tabs} from '@/components/ui/Tabs';
 import {CONTENT_CATEGORIES, matchesCategory} from '@/lib/content/helpers/content';
 import {useRevealFocus} from '@/lib/hooks/useRevealFocus';
 import {useQueryParam} from '@/lib/hooks/useQueryParam';
+import {cidAttrs, itemCid, subCid} from '@/lib/utils/cid';
 import type {SectionIntroView} from '@/types/common';
 import type {ContentCategory, EventItem, Post, TimelineYear} from '@/types/event';
 
@@ -28,26 +29,27 @@ type EventsExplorerProps = {
   intros: {upcoming: SectionIntroView; timeline: SectionIntroView; latest: SectionIntroView; recap: SectionIntroView};
 };
 
-function CardList({id, intro, items}: {id: string; intro: SectionIntroView; items: {key: string; node: ReactNode}[]}) {
+/** `cid` is the block's section ID; each item's card carries `itemCid` of the list (`{cid}-02`). */
+function CardList({id, intro, items, cid}: {id: string; intro: SectionIntroView; items: {key: string; node: ReactNode}[]; cid: string}) {
   const t = useTranslations('Events');
   const tCommon = useTranslations('Common');
   const [visible, setVisible] = useState(PAGE_SIZE);
   const {listRef, reveal} = useRevealFocus<HTMLUListElement>(visible);
   return (
-    <section id={id} aria-labelledby={`${id}-title`}>
-      <SectionHeading id={`${id}-title`} eyebrow={intro.eyebrow} title={intro.title} intro={intro.intro} />
+    <section id={id} aria-labelledby={`${id}-title`} {...cidAttrs(cid, 'Section')}>
+      <SectionHeading id={`${id}-title`} eyebrow={intro.eyebrow} title={intro.title} intro={intro.intro} cid={subCid(cid, 1)} />
       {items.length === 0 ? (
-        <EmptyState title={t('emptyTitle')} body={t('emptyBody')} />
+        <EmptyState title={t('emptyTitle')} body={t('emptyBody')} cid={subCid(cid, 4)} />
       ) : (
         <>
-          <ul ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" {...cidAttrs(subCid(cid, 2), 'CardList')}>
             {items.slice(0, visible).map((item) => (
               <li key={item.key}>{item.node}</li>
             ))}
           </ul>
           {visible < items.length ? (
             <div className="mt-8 flex justify-center">
-              <Button variant="secondary" onClick={() => {
+              <Button variant="secondary" cid={subCid(cid, 3)} onClick={() => {
                   reveal(visible);
                   setVisible((count) => count + PAGE_SIZE);
                 }}
@@ -106,7 +108,7 @@ export function EventsExplorer({upcoming, past, posts, timeline, intros}: Events
   const tabs = (['all', ...CONTENT_CATEGORIES] as TabId[]).map((id) => ({id, label: t(`categories.${id}`)}));
 
   return (
-    <Section id="explore" labelledBy="explore-title">
+    <Section id="explore" labelledBy="explore-title" cid="EVT-03">
       <h2 id="explore-title" className="sr-only">
         {t('tabsLabel')}
       </h2>
@@ -115,21 +117,23 @@ export function EventsExplorer({upcoming, past, posts, timeline, intros}: Events
         items={tabs}
         value={category}
         onValueChange={(id) => setParam(id === 'all' ? null : (id as ContentCategory))}
+        cid="EVT-03-01"
       >
         <div className="flex flex-col gap-20">
           {showEvents ? (
             <CardList
               key={`events-${category}`}
               id="events"
+              cid="EVT-04"
               intro={intros.upcoming}
-              items={filteredUpcoming.map((event) => ({key: event.slug, node: <EventCard event={event} />}))}
+              items={filteredUpcoming.map((event) => ({key: event.slug, node: <EventCard event={event} cid={itemCid('EVT-04-02')} />}))}
             />
           ) : null}
 
           {showEvents && filteredTimeline.length > 0 ? (
-            <section id="timeline" aria-labelledby="timeline-title">
-              <SectionHeading id="timeline-title" eyebrow={intros.timeline.eyebrow} title={intros.timeline.title} />
-              <EventTimeline years={filteredTimeline} />
+            <section id="timeline" aria-labelledby="timeline-title" {...cidAttrs('EVT-05', 'Section')}>
+              <SectionHeading id="timeline-title" eyebrow={intros.timeline.eyebrow} title={intros.timeline.title} cid="EVT-05-01" />
+              <EventTimeline years={filteredTimeline} cid="EVT-05-02" />
             </section>
           ) : null}
 
@@ -137,18 +141,19 @@ export function EventsExplorer({upcoming, past, posts, timeline, intros}: Events
             <CardList
               key={`latest-${category}`}
               id="latest"
+              cid="EVT-06"
               intro={intros.latest}
-              items={filteredPosts.map((post) => ({key: post.slug, node: <NewsCard post={post} />}))}
+              items={filteredPosts.map((post) => ({key: post.slug, node: <NewsCard post={post} cid={itemCid('EVT-06-02')} />}))}
             />
           ) : null}
 
           {showEvents ? (
-            <section id="recap" aria-labelledby="recap-title">
-              <SectionHeading id="recap-title" eyebrow={intros.recap.eyebrow} title={intros.recap.title} />
+            <section id="recap" aria-labelledby="recap-title" {...cidAttrs('EVT-07', 'Section')}>
+              <SectionHeading id="recap-title" eyebrow={intros.recap.eyebrow} title={intros.recap.title} cid="EVT-07-01" />
               {recapPhotos.length > 0 ? (
-                <Gallery key={`recap-${category}`} items={recapPhotos} label={t('galleryLabel')} />
+                <Gallery key={`recap-${category}`} items={recapPhotos} label={t('galleryLabel')} cid="EVT-07-02" />
               ) : (
-                <EmptyState title={t('emptyTitle')} body={t('emptyBody')} />
+                <EmptyState title={t('emptyTitle')} body={t('emptyBody')} cid="EVT-07-03" />
               )}
             </section>
           ) : null}

@@ -36,12 +36,12 @@ export default async function EventsNewsPage({params}: PageProps<'/[locale]/even
 
   return (
     <>
-      <Hero hero={page.hero} />
+      <Hero hero={page.hero} cid="EVT-01" />
 
       {featured ? (
-        <Section id="featured" labelledBy="featured-title" tone="surface">
-          <SectionHeading id="featured-title" eyebrow={page.featured.eyebrow} title={page.featured.title} />
-          <FeaturedContentCard item={featured} />
+        <Section id="featured" labelledBy="featured-title" tone="surface" cid="EVT-02">
+          <SectionHeading id="featured-title" eyebrow={page.featured.eyebrow} title={page.featured.title} cid="EVT-02-01" />
+          <FeaturedContentCard item={featured} cid="EVT-02-02" />
         </Section>
       ) : null}
 
@@ -53,12 +53,12 @@ export default async function EventsNewsPage({params}: PageProps<'/[locale]/even
         intros={{upcoming: page.upcoming, timeline: page.timeline, latest: page.latest, recap: page.recap}}
       />
 
-      <Section id="host-or-request" labelledBy="forms-title" tone="surface">
-        <SectionHeading id="forms-title" eyebrow={page.forms.eyebrow} title={page.forms.title} />
-        <EventForms hostIntro={page.forms.hostIntro} requestIntro={page.forms.requestIntro} />
+      <Section id="host-or-request" labelledBy="forms-title" tone="surface" cid="EVT-08">
+        <SectionHeading id="forms-title" eyebrow={page.forms.eyebrow} title={page.forms.title} cid="EVT-08-01" />
+        <EventForms hostIntro={page.forms.hostIntro} requestIntro={page.forms.requestIntro} cid="EVT-08-02" formCid="EVT-08-03" />
       </Section>
 
-      <FAQSection id="event-qa" intro={{title: t('questionsTitle')}} faqs={faqs} />
+      <FAQSection id="event-qa" intro={{title: t('questionsTitle')}} faqs={faqs} cid="EVT-09" />
     </>
   );
 }

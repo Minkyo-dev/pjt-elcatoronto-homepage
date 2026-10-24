@@ -13,6 +13,7 @@ import {getContactPage} from '@/lib/content/pages';
 import {getSiteSettings} from '@/lib/content/site';
 import {assertLocale} from '@/lib/i18n/locale';
 import {buildPageMetadata} from '@/lib/i18n/metadata';
+import {cidAttrs} from '@/lib/utils/cid';
 
 export async function generateMetadata({params}: PageProps<'/[locale]/contact'>): Promise<Metadata> {
   const locale = assertLocale((await params).locale);
@@ -39,12 +40,12 @@ export default async function ContactPage({params}: PageProps<'/[locale]/contact
 
   return (
     <>
-      <Hero hero={page.hero} />
+      <Hero hero={page.hero} cid="CON-01" />
 
-      <Section id="contact-info" labelledBy="contact-info-title" tone="surface">
-        <SectionHeading id="contact-info-title" title={page.info.title} />
-        <ul className="grid gap-6 lg:grid-cols-3">
-          <li className={cardClass}>
+      <Section id="contact-info" labelledBy="contact-info-title" tone="surface" cid="CON-02">
+        <SectionHeading id="contact-info-title" title={page.info.title} cid="CON-02-01" />
+        <ul className="grid gap-6 lg:grid-cols-3" {...cidAttrs('CON-02-02', 'InfoCards')}>
+          <li className={cardClass} {...cidAttrs('CON-02-02a', 'EmailCard')}>
             <Mail aria-hidden="true" className="size-6 text-secondary" />
             <h3 className="font-heading text-lg font-bold">{t('email')}</h3>
             <a href={`mailto:${settings.contact.email}`} className="font-semibold text-primary underline-offset-4 hover:underline">
@@ -52,12 +53,12 @@ export default async function ContactPage({params}: PageProps<'/[locale]/contact
             </a>
             <FlagBadges flags={settings.contact} />
           </li>
-          <li className={cardClass}>
+          <li className={cardClass} {...cidAttrs('CON-02-02b', 'LocationCard')}>
             <MapPin aria-hidden="true" className="size-6 text-secondary" />
             <h3 className="font-heading text-lg font-bold">{t('location')}</h3>
             <p>{settings.contact.location}</p>
           </li>
-          <li className={cardClass}>
+          <li className={cardClass} {...cidAttrs('CON-02-02c', 'SocialCard')}>
             <Share2 aria-hidden="true" className="size-6 text-secondary" />
             <h3 className="font-heading text-lg font-bold">{t('social')}</h3>
             <ul className="flex flex-col gap-1">
@@ -81,27 +82,27 @@ export default async function ContactPage({params}: PageProps<'/[locale]/contact
         </ul>
       </Section>
 
-      <Section id="contact-form" labelledBy="contact-form-title">
+      <Section id="contact-form" labelledBy="contact-form-title" cid="CON-03">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeading id="contact-form-title" eyebrow={page.form.eyebrow} title={page.form.title} intro={page.form.intro} className="mb-0" />
+            <SectionHeading id="contact-form-title" eyebrow={page.form.eyebrow} title={page.form.title} intro={page.form.intro} className="mb-0" cid="CON-03-01" />
           </div>
           <div className="lg:col-span-8">
-            <ContactForm />
+            <ContactForm cid="CON-03-02" />
           </div>
         </div>
       </Section>
 
-      <Section id="location" labelledBy="location-title" tone="surface">
-        <SectionHeading id="location-title" eyebrow={page.location.eyebrow} title={page.location.title} intro={page.location.intro} />
-        <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border-strong bg-background p-6 text-center lg:aspect-[3/1]">
+      <Section id="location" labelledBy="location-title" tone="surface" cid="CON-04">
+        <SectionHeading id="location-title" eyebrow={page.location.eyebrow} title={page.location.title} intro={page.location.intro} cid="CON-04-01" />
+        <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border-strong bg-background p-6 text-center lg:aspect-[3/1]" {...cidAttrs('CON-04-02', 'MapPlaceholder')}>
           <MapPin aria-hidden="true" className="size-8 text-muted" />
           <p className="font-semibold text-text">{settings.contact.location}</p>
           <p className="max-w-body text-sm text-muted">{t('mapPlaceholder')}</p>
         </div>
       </Section>
 
-      <FAQSection intro={page.faq} faqs={faqs} />
+      <FAQSection intro={page.faq} faqs={faqs} cid="CON-05" />
     </>
   );
 }

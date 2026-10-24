@@ -4,6 +4,7 @@ import {X} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useEffect, useId, useRef, type ReactNode} from 'react';
 import {useRegisterOverlay} from '@/components/layout/OverlayProvider';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 
 type DialogProps = {
@@ -14,6 +15,7 @@ type DialogProps = {
   description?: string;
   variant?: 'modal' | 'drawer' | 'lightbox';
   size?: 'md' | 'lg';
+  cid?: string;
   children: ReactNode;
 };
 
@@ -26,7 +28,7 @@ const variantClasses = {
   lightbox: 'm-auto max-h-[92dvh] w-[calc(100%-2rem)] max-w-5xl rounded-card',
 } as const;
 
-export function Dialog({open, onClose, title, titleHidden, description, variant = 'modal', size = 'md', children}: DialogProps) {
+export function Dialog({open, onClose, title, titleHidden, description, variant = 'modal', size = 'md', cid, children}: DialogProps) {
   const t = useTranslations('Common');
   const ref = useRef<HTMLDialogElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
@@ -69,6 +71,7 @@ export function Dialog({open, onClose, title, titleHidden, description, variant 
       ref={ref}
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
+      {...cidAttrs(cid, 'Dialog')}
       className={cn(
         'bg-surface p-0 text-text shadow-float backdrop:bg-overlay',
         variantClasses[variant],

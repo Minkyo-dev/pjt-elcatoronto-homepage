@@ -7,9 +7,10 @@ import {FormFeedback} from '@/components/ui/FormFeedback';
 import {FormField} from '@/components/ui/FormField';
 import {Input, Textarea} from '@/components/ui/Input';
 import {useDemoForm} from '@/lib/forms/useDemoForm';
+import {cidAttrs} from '@/lib/utils/cid';
 import {eventRegisterSchema} from '@/lib/validation/forms';
 
-export function EventRegisterForm() {
+export function EventRegisterForm({cid}: {cid?: string}) {
   const t = useTranslations('Events');
   const tForms = useTranslations('Forms');
   const tErrors = useTranslations('Errors');
@@ -21,7 +22,7 @@ export function EventRegisterForm() {
   };
 
   return (
-    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-4">
+    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-4" {...cidAttrs(cid, 'EventRegisterForm')}>
       <FormField id={`${id}-name`} label={tForms('fields.name')} required error={errorFor('name')}>
         {(a11y) => (
           <Input {...a11y} name="name" autoComplete="name" value={form.values.name} onChange={(event) => form.setValue('name', event.target.value)} onBlur={() => form.handleBlur('name')} />

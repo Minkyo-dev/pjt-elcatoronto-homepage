@@ -1,11 +1,12 @@
 import {ChevronRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {Link} from '@/lib/i18n/navigation';
+import {cidAttrs} from '@/lib/utils/cid';
 
-export function Breadcrumb({items, current}: {items: {label: string; href: string}[]; current: string}) {
+export function Breadcrumb({items, current, cid}: {items: {label: string; href: string}[]; current: string; cid?: string}) {
   const t = useTranslations('Common');
   return (
-    <nav aria-label={t('breadcrumb')}>
+    <nav aria-label={t('breadcrumb')} {...cidAttrs(cid, 'Breadcrumb')}>
       <ol className="flex flex-wrap items-center gap-2 text-sm text-muted">
         {items.map((item) => (
           <li key={item.href} className="flex items-center gap-2">

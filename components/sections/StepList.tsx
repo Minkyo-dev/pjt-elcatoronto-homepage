@@ -1,10 +1,12 @@
+import {cidAttrs, itemCid} from '@/lib/utils/cid';
+
 type Step = {title: string; body: string; duration?: string};
 
-export function StepList({steps}: {steps: Step[]}) {
+export function StepList({steps, cid}: {steps: Step[]; cid?: string}) {
   return (
-    <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" {...cidAttrs(cid, 'StepList')}>
       {steps.map((step, index) => (
-        <li key={step.title} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-6">
+        <li key={step.title} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-6" {...cidAttrs(itemCid(cid), 'Step')}>
           <span
             aria-hidden="true"
             className="inline-flex size-10 items-center justify-center rounded-full bg-primary font-heading font-bold text-on-primary"

@@ -2,6 +2,7 @@ import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import type {Metadata, Viewport} from 'next';
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
+import {ComponentIdOverlay} from '@/components/layout/ComponentIdOverlay';
 import {FloatingActions} from '@/components/layout/FloatingActions';
 import {HydrationMarker} from '@/components/layout/HydrationMarker';
 import {Footer} from '@/components/layout/Footer';
@@ -47,6 +48,7 @@ export default async function LocaleLayout({children, params}: LayoutProps<'/[lo
             <Footer settings={settings} />
             <FloatingActions />
             <HydrationMarker />
+            <ComponentIdOverlay />
           </OverlayProvider>
         </NextIntlClientProvider>
       </body>

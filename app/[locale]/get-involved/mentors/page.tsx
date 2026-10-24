@@ -22,19 +22,19 @@ export default async function MentorsPage({params}: PageProps<'/[locale]/get-inv
 
   return (
     <>
-      <Hero hero={page.hero} />
+      <Hero hero={page.hero} cid="MTR-01" />
 
-      <Section id="featured" labelledBy="featured-title" tone="surface">
-        <SectionHeading id="featured-title" eyebrow={page.featured.eyebrow} title={page.featured.title} />
-        <MentorShowcase mentors={featured} layout="grid" label={page.featured.title} />
+      <Section id="featured" labelledBy="featured-title" tone="surface" cid="MTR-02">
+        <SectionHeading id="featured-title" eyebrow={page.featured.eyebrow} title={page.featured.title} cid="MTR-02-01" />
+        <MentorShowcase mentors={featured} layout="grid" label={page.featured.title} cid="MTR-02-02" dialogCid="MTR-05" />
       </Section>
 
-      <Section id="directory" labelledBy="directory-title">
-        <SectionHeading id="directory-title" eyebrow={page.directory.eyebrow} title={page.directory.title} intro={page.directory.intro} />
-        <MentorDirectory mentors={mentors} label={page.directory.title} />
+      <Section id="directory" labelledBy="directory-title" cid="MTR-03">
+        <SectionHeading id="directory-title" eyebrow={page.directory.eyebrow} title={page.directory.title} intro={page.directory.intro} cid="MTR-03-01" />
+        <MentorDirectory mentors={mentors} label={page.directory.title} cid="MTR-03" dialogCid="MTR-05" />
       </Section>
 
-      <CTASection id="become-a-mentor" block={page.cta} />
+      <CTASection id="become-a-mentor" block={page.cta} cid="MTR-04" />
     </>
   );
 }

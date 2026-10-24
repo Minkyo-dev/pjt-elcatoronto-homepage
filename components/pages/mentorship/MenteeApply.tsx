@@ -8,11 +8,13 @@ import {FormFeedback} from '@/components/ui/FormFeedback';
 import {ChoiceGroup, FormField} from '@/components/ui/FormField';
 import {Input, Textarea} from '@/components/ui/Input';
 import {useDemoForm} from '@/lib/forms/useDemoForm';
+import {cidAttrs, subCid} from '@/lib/utils/cid';
 import {MENTEE_INTERESTS, menteeApplySchema} from '@/lib/validation/forms';
 
 const MOTIVATION_MAX = 500;
 
-export function MenteeApply() {
+/** `cid` labels the apply button (a component of the page section); `dialogCid` is the dialog's own section-level ID. */
+export function MenteeApply({cid, dialogCid}: {cid?: string; dialogCid?: string}) {
   const t = useTranslations('Mentorship');
   const tForms = useTranslations('Forms');
   const tErrors = useTranslations('Errors');
@@ -37,11 +39,17 @@ export function MenteeApply() {
 
   return (
     <>
-      <Button size="lg" aria-haspopup="dialog" onClick={() => setOpen(true)}>
+      <Button size="lg" aria-haspopup="dialog" onClick={() => setOpen(true)} cid={cid}>
         {t('applyNow')}
       </Button>
-      <Dialog open={open} onClose={() => setOpen(false)} title={t('applyTitle')} size="lg">
-        <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5">
+      <Dialog open={open} onClose={() => setOpen(false)} title={t('applyTitle')} size="lg" cid={dialogCid}>
+        <form
+          ref={formRef}
+          noValidate
+          onSubmit={form.handleSubmit}
+          className="flex flex-col gap-5"
+          {...cidAttrs(subCid(dialogCid, 1), 'MenteeApplyForm')}
+        >
           <FormField id={`${id}-name`} label={tForms('fields.name')} required error={errorFor('name')}>
             {(field) => (
               <Input

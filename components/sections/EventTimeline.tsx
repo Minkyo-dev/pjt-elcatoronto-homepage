@@ -2,17 +2,18 @@ import {useFormatter, useTranslations} from 'next-intl';
 import {Fragment} from 'react';
 import {Badge} from '@/components/ui/Badge';
 import {Link} from '@/lib/i18n/navigation';
+import {cidAttrs, itemCid} from '@/lib/utils/cid';
 import type {TimelineYear} from '@/types/event';
 
-export function EventTimeline({years}: {years: TimelineYear[]}) {
+export function EventTimeline({years, cid}: {years: TimelineYear[]; cid?: string}) {
   const t = useTranslations('Events');
   const format = useFormatter();
   const firstUpcoming = years.flatMap((year) => year.items).find((item) => item.status === 'upcoming')?.slug;
 
   return (
-    <ol className="flex flex-col gap-10">
+    <ol className="flex flex-col gap-10" {...cidAttrs(cid, 'EventTimeline')}>
       {years.map((year) => (
-        <li key={year.year} className="grid gap-4 lg:grid-cols-12">
+        <li key={year.year} className="grid gap-4 lg:grid-cols-12" {...cidAttrs(itemCid(cid, 'a'), 'TimelineYear')}>
           <h3 className="font-heading text-h3 font-extrabold text-secondary lg:col-span-2">{year.year}</h3>
           <ul className="flex flex-col gap-3 lg:col-span-10">
             {year.items.map((item) => (
@@ -24,7 +25,10 @@ export function EventTimeline({years}: {years: TimelineYear[]}) {
                     <span aria-hidden="true" className="h-px flex-1 bg-accent" />
                   </li>
                 ) : null}
-                <li className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-card border border-border bg-surface px-4 py-3">
+                <li
+                  className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-card border border-border bg-surface px-4 py-3"
+                  {...cidAttrs(itemCid(cid, 'b'), 'TimelineEvent')}
+                >
                   <time dateTime={item.startsAt} className="w-32 shrink-0 text-sm text-muted">
                     {format.dateTime(new Date(item.startsAt), {dateStyle: 'medium'})}
                   </time>

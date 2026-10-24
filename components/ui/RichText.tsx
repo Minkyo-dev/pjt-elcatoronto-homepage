@@ -1,4 +1,5 @@
 import {PortableText, type PortableTextComponents} from '@portabletext/react';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 import type {RichText as RichTextValue} from '@/types/common';
 
@@ -29,9 +30,9 @@ const components: PortableTextComponents = {
   },
 };
 
-export function RichText({value, className}: {value: RichTextValue; className?: string}) {
+export function RichText({value, className, cid}: {value: RichTextValue; className?: string; cid?: string}) {
   return (
-    <div className={cn('flex max-w-body flex-col gap-4 text-base text-text', className)}>
+    <div className={cn('flex max-w-body flex-col gap-4 text-base text-text', className)} {...cidAttrs(cid, 'RichText')}>
       <PortableText value={value} components={components} />
     </div>
   );

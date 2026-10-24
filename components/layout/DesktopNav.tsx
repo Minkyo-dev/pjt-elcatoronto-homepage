@@ -5,6 +5,7 @@ import {useEffect, useRef, useState, type KeyboardEvent} from 'react';
 import {useRegisterOverlay} from '@/components/layout/OverlayProvider';
 import {Link, usePathname} from '@/lib/i18n/navigation';
 import {isCurrent, isNavGroup, isWithin, type NavItem} from '@/lib/navigation/site-nav';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 
 const topLinkClass =
@@ -15,7 +16,7 @@ function panelLinks(key: string): HTMLAnchorElement[] {
   return Array.from(document.querySelectorAll<HTMLAnchorElement>(`#nav-panel-${key} a`));
 }
 
-export function DesktopNav({items, label}: {items: NavItem[]; label: string}) {
+export function DesktopNav({items, label, cid}: {items: NavItem[]; label: string; cid?: string}) {
   const pathname = usePathname();
   const [openKey, setOpenKey] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -63,7 +64,7 @@ export function DesktopNav({items, label}: {items: NavItem[]; label: string}) {
   }
 
   return (
-    <nav ref={navRef} aria-label={label} className="hidden lg:block">
+    <nav ref={navRef} aria-label={label} className="hidden lg:block" {...cidAttrs(cid, 'DesktopNav')}>
       <ul className="flex items-center gap-1">
         {items.map((item) => {
           if (!isNavGroup(item)) {

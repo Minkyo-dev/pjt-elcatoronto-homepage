@@ -20,12 +20,12 @@ export default async function ReportsPage({params}: PageProps<'/[locale]/about/r
 
   return (
     <>
-      <Hero hero={page.hero} />
-      <Section id="reports-list" labelledBy="reports-list-title">
+      <Hero hero={page.hero} cid="RPT-01" />
+      <Section id="reports-list" labelledBy="reports-list-title" cid="RPT-02">
         <h2 id="reports-list-title" className="sr-only">
           {t('tabsLabel')}
         </h2>
-        <ReportsTabs reports={reports} />
+        <ReportsTabs reports={reports} cid="RPT-02" />
       </Section>
     </>
   );

@@ -8,17 +8,18 @@ import {FormField} from '@/components/ui/FormField';
 import {Input, Select, Textarea} from '@/components/ui/Input';
 import {useDemoForm} from '@/lib/forms/useDemoForm';
 import {useQueryParam} from '@/lib/hooks/useQueryParam';
+import {cidAttrs} from '@/lib/utils/cid';
 import {CONTACT_TOPICS, contactSchema, type ContactTopic} from '@/lib/validation/forms';
 
 const MESSAGE_MAX = 2000;
 
 /** Reads ?topic= after hydration; the key remounts the fields so the topic becomes the initial value. */
-export function ContactForm() {
+export function ContactForm({cid}: {cid?: string}) {
   const [topic] = useQueryParam('topic', CONTACT_TOPICS);
-  return <ContactFormFields key={topic ?? 'none'} initialTopic={topic ?? ''} />;
+  return <ContactFormFields key={topic ?? 'none'} initialTopic={topic ?? ''} cid={cid} />;
 }
 
-function ContactFormFields({initialTopic}: {initialTopic: ContactTopic | ''}) {
+function ContactFormFields({initialTopic, cid}: {initialTopic: ContactTopic | ''; cid?: string}) {
   const t = useTranslations('Contact');
   const tForms = useTranslations('Forms');
   const tErrors = useTranslations('Errors');
@@ -30,7 +31,7 @@ function ContactFormFields({initialTopic}: {initialTopic: ContactTopic | ''}) {
   };
 
   return (
-    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5">
+    <form ref={formRef} noValidate onSubmit={form.handleSubmit} className="flex flex-col gap-5" {...cidAttrs(cid, 'ContactForm')}>
       <div className="grid gap-5 sm:grid-cols-2">
         <FormField id={`${id}-name`} label={tForms('fields.name')} required error={errorFor('name')}>
           {(field) => (

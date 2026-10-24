@@ -1,5 +1,6 @@
 import type {ComponentProps, ReactNode} from 'react';
 import {Link} from '@/lib/i18n/navigation';
+import {cidAttrs} from '@/lib/utils/cid';
 import {cn} from '@/lib/utils/cn';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'ghost' | 'inverse' | 'on-dark';
@@ -43,6 +44,8 @@ type BaseProps = {
   icon?: ReactNode;
   iconPosition?: 'start' | 'end';
   className?: string;
+  /** Design-review component ID (lib/utils/cid.ts). */
+  cid?: string;
   children: ReactNode;
 };
 
@@ -51,8 +54,9 @@ type LinkButtonProps = BaseProps & Omit<ComponentProps<'a'>, keyof BaseProps | '
 
 /** Renders a locale-aware Link for internal paths, <a> for anchors/mailto/external URLs, otherwise <button>. */
 export function Button(props: NativeButtonProps | LinkButtonProps) {
-  const {variant, size, icon, iconPosition = 'end', className, children, ...rest} = props;
+  const {variant, size, icon, iconPosition = 'end', className, cid, children, ...rest} = props;
   const classes = buttonClasses({variant, size, className});
+  const cidProps = cidAttrs(cid, 'Button');
   const content = (
     <>
       {icon && iconPosition === 'start' ? icon : null}
@@ -65,20 +69,20 @@ export function Button(props: NativeButtonProps | LinkButtonProps) {
     const {href, ...anchorProps} = rest as Omit<LinkButtonProps, keyof BaseProps>;
     if (isExternalHref(href)) {
       return (
-        <a href={href} className={classes} {...anchorProps} target="_blank" rel="noopener noreferrer">
+        <a href={href} className={classes} {...cidProps} {...anchorProps} target="_blank" rel="noopener noreferrer">
           {content}
         </a>
       );
     }
     if (href.startsWith('#') || href.startsWith('mailto:')) {
       return (
-        <a href={href} className={classes} {...anchorProps}>
+        <a href={href} className={classes} {...cidProps} {...anchorProps}>
           {content}
         </a>
       );
     }
     return (
-      <Link href={href} className={classes} {...anchorProps}>
+      <Link href={href} className={classes} {...cidProps} {...anchorProps}>
         {content}
       </Link>
     );
@@ -86,7 +90,7 @@ export function Button(props: NativeButtonProps | LinkButtonProps) {
 
   const {type = 'button', ...buttonProps} = rest as Omit<NativeButtonProps, keyof BaseProps>;
   return (
-    <button type={type} className={classes} {...buttonProps}>
+    <button type={type} className={classes} {...cidProps} {...buttonProps}>
       {content}
     </button>
   );

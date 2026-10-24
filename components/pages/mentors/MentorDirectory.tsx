@@ -9,11 +9,21 @@ import {EmptyState} from '@/components/ui/EmptyState';
 import {Input} from '@/components/ui/Input';
 import {useRevealFocus} from '@/lib/hooks/useRevealFocus';
 import {filterMentors} from '@/lib/content/helpers/mentors';
+import {cidAttrs, subCid} from '@/lib/utils/cid';
 import type {Mentor} from '@/types/mentor';
 
 const PAGE_SIZE = 12;
 
-export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: string}) {
+type MentorDirectoryProps = {
+  mentors: Mentor[];
+  label: string;
+  /** Section cid of the host section; its SectionHeading is component 01, so the directory labels 02–06. */
+  cid?: string;
+  /** Section-level cid of the mentor profile dialog. */
+  dialogCid?: string;
+};
+
+export function MentorDirectory({mentors, label, cid, dialogCid}: MentorDirectoryProps) {
   const t = useTranslations('Mentors');
   const tCommon = useTranslations('Common');
   const id = useId();
@@ -31,7 +41,7 @@ export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: str
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2 sm:max-w-md">
+      <div className="flex flex-col gap-2 sm:max-w-md" {...cidAttrs(subCid(cid, 2), 'MentorSearch')}>
         <label htmlFor={`${id}-search`} className="text-sm font-semibold text-text">
           {t('searchLabel')}
         </label>
@@ -50,7 +60,7 @@ export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: str
         </div>
       </div>
 
-      <p role="status" className="text-sm font-medium text-muted">
+      <p role="status" className="text-sm font-medium text-muted" {...cidAttrs(subCid(cid, 3), 'ResultCount')}>
         {t('resultCount', {count: results.length})}
       </p>
 
@@ -59,6 +69,7 @@ export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: str
           icon={<SearchX aria-hidden="true" className="size-8 text-muted" />}
           title={t('emptyTitle')}
           body={t('emptyBody')}
+          cid={subCid(cid, 5)}
           action={
             <Button
               variant="secondary"
@@ -73,12 +84,16 @@ export function MentorDirectory({mentors, label}: {mentors: Mentor[]; label: str
         />
       ) : (
         <div ref={listRef}>
-          <MentorShowcase mentors={results.slice(0, visibleCount)} layout="grid" label={label} />
+          <MentorShowcase mentors={results.slice(0, visibleCount)} layout="grid" label={label} cid={subCid(cid, 4)} dialogCid={dialogCid} />
         </div>
       )}
 
       {visibleCount < results.length ? (
-        <Button variant="secondary" className="self-center" onClick={() => {
+        <Button
+          variant="secondary"
+          className="self-center"
+          cid={subCid(cid, 6)}
+          onClick={() => {
             reveal(visibleCount);
             setVisibleCount((count) => count + PAGE_SIZE);
           }}

@@ -20,6 +20,7 @@ Next.js + Sanity + Vercel 기반 ELCA(Entrepreneurial Leadership Canada) 공식 
 | `brief/` | 전달받은 요구사항 원문 (수정하지 않음) |
 | `specs/` | 설계 스펙 |
 | `plans/` | 구현 계획 — [Phase 1 인덱스](plans/2026-10-13-phase1-00-index.md) |
+| `component-ids.md` | 디자인 리뷰용 화면별 컴포넌트 ID 목록 (`?ids=1`로 화면에 표시) |
 
 ## 문서 운영 규칙
 

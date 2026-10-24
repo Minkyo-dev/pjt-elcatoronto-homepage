@@ -8,11 +8,14 @@ import {Dialog} from '@/components/ui/Dialog';
 import {ImageFrame} from '@/components/ui/ImageFrame';
 import {useRevealFocus} from '@/lib/hooks/useRevealFocus';
 import {Link} from '@/lib/i18n/navigation';
+import {cidAttrs, itemCid} from '@/lib/utils/cid';
 import type {ImageView} from '@/types/common';
 
 export type GalleryItem = {key: string; image: ImageView; caption: string; href?: string};
 
-export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; label: string; pageSize?: number}) {
+type GalleryProps = {items: GalleryItem[]; label: string; pageSize?: number; cid?: string};
+
+export function Gallery({items, label, pageSize = 6, cid}: GalleryProps) {
   const t = useTranslations('Events');
   const tCommon = useTranslations('Common');
   const [visible, setVisible] = useState(pageSize);
@@ -22,9 +25,9 @@ export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; lab
 
   return (
     <>
-      <ul ref={listRef} aria-label={label} className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <ul ref={listRef} aria-label={label} className="grid grid-cols-2 gap-4 sm:grid-cols-3" {...cidAttrs(cid, 'Gallery')}>
         {items.slice(0, visible).map((item, index) => (
-          <li key={item.key}>
+          <li key={item.key} {...cidAttrs(itemCid(cid, 'a'), 'GalleryPhoto')}>
             <button
               type="button"
               aria-haspopup="dialog"
@@ -39,7 +42,7 @@ export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; lab
       </ul>
       {visible < items.length ? (
         <div className="mt-8 flex justify-center">
-          <Button variant="secondary" onClick={() => {
+          <Button variant="secondary" cid={itemCid(cid, 'b')} onClick={() => {
               reveal(visible);
               setVisible((count) => count + pageSize);
             }}>
@@ -47,7 +50,7 @@ export function Gallery({items, label, pageSize = 6}: {items: GalleryItem[]; lab
           </Button>
         </div>
       ) : null}
-      <Dialog open={current !== null} onClose={() => setOpenIndex(null)} title={current?.caption ?? ''} variant="lightbox">
+      <Dialog open={current !== null} onClose={() => setOpenIndex(null)} title={current?.caption ?? ''} variant="lightbox" cid={itemCid(cid, 'c')}>
         {current ? (
           <figure className="flex flex-col gap-3">
             <Image

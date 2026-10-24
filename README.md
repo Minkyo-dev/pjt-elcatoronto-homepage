@@ -35,6 +35,9 @@ Its `page.goto` waits for `<html data-hydrated="true">`, which `components/layou
 sets after hydration, so tests never interact with a page before React is ready. `page.reload()` does
 not wait; wait for `html[data-hydrated="true"]` yourself after a reload.
 
+Component IDs for design review: add `?ids=1` to any URL (or press Shift+Alt+I) to outline every section and
+component with its ID. The full list is in [`docs/component-ids.md`](docs/component-ids.md).
+
 UI Lab (component showcase for designers): build with `NEXT_PUBLIC_ENABLE_UI_LAB=1`, then open `/en/ui-lab`.
 It returns 404 otherwise.
 
